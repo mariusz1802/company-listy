@@ -1,6 +1,7 @@
 const express = require("express");
 const fs = require("fs");
 const { traceDeprecation } = require("process");
+const cheerio = require("cheerio");
 const app = express();
 
 app.use(express.static("public"));
@@ -40,25 +41,28 @@ firmy.forEach((firma) => {
   console.log("--------------------------");
 });
 
-//Konwertuj tablice firm na format JSON i wyswietl w konsoli
+app.get("/", (req, res) => {
+  const html = fs.readFileSync("./public/index.html");
+  const $ = cheerio.load(html);
 
-const jsonFirmy = JSON.stringify(firmy);
+  const tabela = $("#tabela");
+  const tbody = $("tbody"[0]);
 
-const tabela = document.getElementById("tabela");
-const tbody = tabela.getElementsByTagName("tbody")[0];
+  firmy.forEach((firma) => {
+    const tr = document.createElement("tr");
+    const tdNazwa = document.createElement("td");
+    const tdWww = document.createElement("td");
+    const tdEmail = document.createElement("td");
+    tdNazwa.textContent = firma.nameCompany;
+    tdWww.innerHTML = `<a href="${firma.www}" target="_blank">${firma.www}</a>`;
+    tdEmail.innerHTML = `<a href="mailto:${firma.email}">${firma.email}</a>`;
+    tr.appendChild(tdNazwa);
+    tr.appendChild(tdWww);
+    tr.appendChild(tdEmail);
+    tbody.appendChild(tr);
+  });
 
-firmy.forEach((firma) => {
-  const tr = document.createElement("tr");
-  const tdNazwa = document.createElement("td");
-  const tdWww = document.createElement("td");
-  const tdEmail = document.createElement("td");
-  tdNazwa.textContent = firma.nameCompany;
-  tdWww.innerHTML = `<a href="${firma.www}" target="_blank">${firma.www}</a>`;
-  tdEmail.innerHTML = `<a href="mailto:${firma.email}">${firma.email}</a>`;
-  tr.appendChild(tdNazwa);
-  tr.appendChild(tdWww);
-  tr.appendChild(tdEmail);
-  tbody.appendChild(tr);
+  res.send($.html());
 });
 
 app.listen(3000, () => {
