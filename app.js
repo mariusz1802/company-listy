@@ -1,10 +1,11 @@
 const express = require("express");
 const fs = require("fs");
-const { traceDeprecation } = require("process");
 const cheerio = require("cheerio");
 const app = express();
+let ejs = require("ejs");
+let path = require("path");
 
-app.use(express.static("public"));
+app.set("view engine", "ejs");
 
 //odczytaj dane z data.txt
 const dane = fs.readFileSync("./data.txt", "utf8");
@@ -29,16 +30,21 @@ linie.forEach((linia) => {
       nameCompany: dopasowanie[1],
       www: dopasowanie[2],
       email: dopasowanie[3],
+      checked: false,
     };
     firmy.push(firma);
   }
 });
 
+app.get("/", (req, res) => {
+  res.render("index", { firmy: firmy });
+});
+
 firmy.forEach((firma) => {
-  console.log("nazwa firmy:", firma.nameCompany);
-  console.log("adres www firmy:", firma.www);
-  console.log("adres email:", firma.email);
-  console.log("--------------------------");
+  // console.log("nazwa firmy:", firma.nameCompany);
+  // console.log("adres www firmy:", firma.www);
+  // console.log("adres email:", firma.email);
+  // console.log("--------------------------");
 });
 
 app.get("/", (req, res) => {
@@ -48,22 +54,10 @@ app.get("/", (req, res) => {
   const tabela = $("#tabela");
   const tbody = $("tbody"[0]);
 
-  firmy.forEach((firma) => {
-    const tr = document.createElement("tr");
-    const tdNazwa = document.createElement("td");
-    const tdWww = document.createElement("td");
-    const tdEmail = document.createElement("td");
-    tdNazwa.textContent = firma.nameCompany;
-    tdWww.innerHTML = `<a href="${firma.www}" target="_blank">${firma.www}</a>`;
-    tdEmail.innerHTML = `<a href="mailto:${firma.email}">${firma.email}</a>`;
-    tr.appendChild(tdNazwa);
-    tr.appendChild(tdWww);
-    tr.appendChild(tdEmail);
-    tbody.appendChild(tr);
-  });
-
   res.send($.html());
 });
+
+app.use(express.static(path.join(__dirname, "public")));
 
 app.listen(3000, () => {
   console.log("Serwer dziala na porcie 3000");
