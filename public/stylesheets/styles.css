@@ -29,3 +29,6 @@ th {
   background: #3802a4;
   color: white;
 }
+input:checked{
+  outline: 2px solid deeppink;
+}

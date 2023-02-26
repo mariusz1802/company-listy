@@ -40,22 +40,8 @@ app.get("/", (req, res) => {
   res.render("index", { firmy: firmy });
 });
 
-firmy.forEach((firma) => {
-  // console.log("nazwa firmy:", firma.nameCompany);
-  // console.log("adres www firmy:", firma.www);
-  // console.log("adres email:", firma.email);
-  // console.log("--------------------------");
-});
 
-app.get("/", (req, res) => {
-  const html = fs.readFileSync("./public/index.html");
-  const $ = cheerio.load(html);
 
-  const tabela = $("#tabela");
-  const tbody = $("tbody"[0]);
-
-  res.send($.html());
-});
 
 app.use(express.static(path.join(__dirname, "public")));
 
