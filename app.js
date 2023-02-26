@@ -1,9 +1,34 @@
 const express = require("express");
 const fs = require("fs");
-const cheerio = require("cheerio");
 const app = express();
 let ejs = require("ejs");
 let path = require("path");
+
+
+
+//mongoose
+main().catch(err => console.log(err));
+
+
+async function main() {
+
+const companySchema = new mongoose.Schema({
+  name : String
+})
+
+const Company = mongoose.model('Company', companySchema);
+
+const bomba = new Company({name : 'Bomba'});
+console.log(bomba.name);
+
+await bomba.save();
+
+const companies = await Company.find()
+console.log(companies);
+
+
+}
+
 
 app.set("view engine", "ejs");
 
@@ -18,7 +43,6 @@ const wyrazenie =
   /^(.*) - (https?:\/\/[\S]+) - E-mail: ([\w.-]+@[\w.-]+\.[\w.-]+)/;
 
 //Tablica na dane firm;
-
 const firmy = [];
 
 linie.forEach((linia) => {
@@ -27,7 +51,7 @@ linie.forEach((linia) => {
 
   if (dopasowanie) {
     const firma = {
-      nameCompany: dopasowanie[1],
+      name: dopasowanie[1],
       www: dopasowanie[2],
       email: dopasowanie[3],
       checked: false,
