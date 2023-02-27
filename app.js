@@ -3,25 +3,9 @@ const fs = require("fs");
 const app = express();
 let ejs = require("ejs");
 let path = require("path");
+let mongoose = require("mongoose");
 
 //mongoose
-main().catch((err) => console.log(err));
-
-async function main() {
-  const companySchema = new mongoose.Schema({
-    name: String,
-  });
-
-  const Company = mongoose.model("Company", companySchema);
-
-  const bomba = new Company({ name: "Bomba" });
-  console.log(bomba.name);
-
-  await bomba.save();
-
-  const companies = await Company.find();
-  console.log(companies);
-}
 
 app.set("view engine", "ejs");
 
@@ -52,16 +36,6 @@ linie.forEach((linia) => {
     firmy.push(firma);
   }
 });
-
-const firmaDB = new Company({
-  nameCompany: "Bomba web design",
-  www: "www.bombadesign.pl",
-  email: "kontakt@bombadesign.pl",
-});
-
-const firmys = Company.find();
-
-console.log(firmys);
 
 app.get("/", (req, res) => {
   res.render("index", { firmy: firmy });

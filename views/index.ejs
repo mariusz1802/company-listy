@@ -5,17 +5,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="/stylesheets/styles.css" />
-    <title>Document</title>
+    <title>Agency List DB</title>
   </head>
   <body>
     <h1>Lista firm Niemcy</h1>
+    <div class="mailList">
+      asd@o2.pl, 1sdasdfs@o2.pl, sdaas@o2.pl, dasdas@o2.pl
+    </div>
+
     <table>
       <thead>
         <tr>
           <th>Nazwa Firmy</th>
           <th>Adres strony internetowej</th>
           <th>Adres Email</th>
-          <th>Send</th>
+          <th>Add</th>
+          <th>Delete</th>
+          <th>Uncheck</th>
         </tr>
       </thead>
       <tbody>
@@ -26,7 +32,9 @@
             <%- `<a href="${company.www}" target="blank">${company.www}</a>` %>
           </td>
           <td><%- company.email %></td>
-          <td><input type="checkbox" /></td>
+          <td class="buttonCell"><button id="checkBtn">Check</button></td>
+          <td class="buttonCell"><button id="uncheckBtn">Uncheck</button></td>
+          <td class="buttonCell"><button id="deleteBtn">Delete</button></td>
         </tr>
         <%}); %>
       </tbody>
