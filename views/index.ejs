@@ -19,14 +19,19 @@
         </tr>
       </thead>
       <tbody>
-        <% firmy.forEach(function(company){ %>
-        <tr>
+        <% firmy.forEach(function(company){ %> <% if(company.checked) { %>
+        <tr class="greens">
+          <% }else{ %>
+        </tr>
+
+        <tr class="red">
+          <% } %>
           <td><%- company.nameCompany %></td>
           <td>
             <%- `<a href="${company.www}" target="blank">${company.www}</a>` %>
           </td>
           <td><%- company.email %></td>
-          <td><input type="checkbox" checked="false" /></td>
+          <td><input type="checkbox" /></td>
         </tr>
         <%}); %>
       </tbody>

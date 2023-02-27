@@ -10,6 +10,13 @@ body {
   align-items: center;
 }
 
+.greens {
+  background: greenyellow;
+}
+.red {
+  background: red;
+}
+
 table,
 th,
 td {
@@ -22,7 +29,7 @@ table {
 }
 
 td {
-  background: rgb(220, 220, 220);
+  /* background: rgb(220, 220, 220); */
 }
 
 th {

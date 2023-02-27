@@ -5,6 +5,22 @@ const app = express();
 let ejs = require("ejs");
 let path = require("path");
 
+const mongoose = require("mongoose");
+
+main().catch((err) => console.log(err));
+
+async function main() {
+  await mongoose.connect("mondodb://127.0.0.1:27017/test");
+}
+
+const companySchema = new mongoose.Schema({
+  nameComapny: String,
+  www: String,
+  email: String,
+});
+
+const Company = mongoose.model("Company", companySchema);
+
 app.set("view engine", "ejs");
 
 //odczytaj dane z data.txt
@@ -30,11 +46,21 @@ linie.forEach((linia) => {
       nameCompany: dopasowanie[1],
       www: dopasowanie[2],
       email: dopasowanie[3],
-      checked: false,
     };
+
     firmy.push(firma);
   }
 });
+
+const firmaDB = new Company({
+  nameCompany: "Bomba web design",
+  www: "www.bombadesign.pl",
+  email: "kontakt@bombadesign.pl",
+});
+
+const firmys = Company.find();
+
+console.log(firmys);
 
 app.get("/", (req, res) => {
   res.render("index", { firmy: firmy });
