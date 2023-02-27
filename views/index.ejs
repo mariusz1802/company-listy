@@ -19,14 +19,9 @@
         </tr>
       </thead>
       <tbody>
-        <% firmy.forEach(function(company){ %> <% if(company.checked) { %>
-        <tr class="greens">
-          <% }else{ %>
-        </tr>
-
-        <tr class="red">
-          <% } %>
-          <td><%- company.nameCompany %></td>
+        <% firmy.forEach(function(company){ %>
+        <tr>
+          <td><%- company.name %></td>
           <td>
             <%- `<a href="${company.www}" target="blank">${company.www}</a>` %>
           </td>

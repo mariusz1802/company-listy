@@ -1,25 +1,27 @@
 const express = require("express");
 const fs = require("fs");
-const cheerio = require("cheerio");
 const app = express();
 let ejs = require("ejs");
 let path = require("path");
 
-const mongoose = require("mongoose");
-
+//mongoose
 main().catch((err) => console.log(err));
 
 async function main() {
-  await mongoose.connect("mondodb://127.0.0.1:27017/test");
+  const companySchema = new mongoose.Schema({
+    name: String,
+  });
+
+  const Company = mongoose.model("Company", companySchema);
+
+  const bomba = new Company({ name: "Bomba" });
+  console.log(bomba.name);
+
+  await bomba.save();
+
+  const companies = await Company.find();
+  console.log(companies);
 }
-
-const companySchema = new mongoose.Schema({
-  nameComapny: String,
-  www: String,
-  email: String,
-});
-
-const Company = mongoose.model("Company", companySchema);
 
 app.set("view engine", "ejs");
 
@@ -34,7 +36,6 @@ const wyrazenie =
   /^(.*) - (https?:\/\/[\S]+) - E-mail: ([\w.-]+@[\w.-]+\.[\w.-]+)/;
 
 //Tablica na dane firm;
-
 const firmy = [];
 
 linie.forEach((linia) => {
@@ -43,7 +44,7 @@ linie.forEach((linia) => {
 
   if (dopasowanie) {
     const firma = {
-      nameCompany: dopasowanie[1],
+      name: dopasowanie[1],
       www: dopasowanie[2],
       email: dopasowanie[3],
     };
@@ -64,23 +65,6 @@ console.log(firmys);
 
 app.get("/", (req, res) => {
   res.render("index", { firmy: firmy });
-});
-
-firmy.forEach((firma) => {
-  // console.log("nazwa firmy:", firma.nameCompany);
-  // console.log("adres www firmy:", firma.www);
-  // console.log("adres email:", firma.email);
-  // console.log("--------------------------");
-});
-
-app.get("/", (req, res) => {
-  const html = fs.readFileSync("./public/index.html");
-  const $ = cheerio.load(html);
-
-  const tabela = $("#tabela");
-  const tbody = $("tbody"[0]);
-
-  res.send($.html());
 });
 
 app.use(express.static(path.join(__dirname, "public")));
