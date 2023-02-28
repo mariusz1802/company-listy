@@ -9,6 +9,8 @@ let mongoose = require("mongoose");
 
 app.set("view engine", "ejs");
 
+app.use(express.static(path.join(__dirname, "client")));
+
 //odczytaj dane z data.txt
 const dane = fs.readFileSync("./data.txt", "utf8");
 

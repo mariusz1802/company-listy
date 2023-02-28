@@ -8,10 +8,9 @@
     <title>Agency List DB</title>
   </head>
   <body>
-    <h1>Lista firm Niemcy</h1>
-    <div class="mailList">
-      asd@o2.pl, 1sdasdfs@o2.pl, sdaas@o2.pl, dasdas@o2.pl
-    </div>
+    <h1>Comapnies from Germany</h1>
+    <div class="mailList">choose mail which you want to send...</div>
+    <button id="selectBtn">Copy Text</button>
 
     <table>
       <thead>
@@ -31,13 +30,15 @@
           <td>
             <%- `<a href="${company.www}" target="blank">${company.www}</a>` %>
           </td>
-          <td><%- company.email %></td>
+          <td class="companyEmail"><%- company.email %></td>
           <td class="buttonCell"><button id="checkBtn">Check</button></td>
-          <td class="buttonCell"><button id="uncheckBtn">Uncheck</button></td>
+          <td class="buttonCell"><button id="unCheckBtn">Uncheck</button></td>
           <td class="buttonCell"><button id="deleteBtn">Delete</button></td>
         </tr>
         <%}); %>
       </tbody>
     </table>
+
+    <script type="text/javascript" src="/js/frontend.js"></script>
   </body>
 </html>
