@@ -8,6 +8,11 @@ body {
   flex-direction: column;
   align-content: center;
   align-items: center;
+  color: rgb(42, 0, 55);
+}
+
+body a {
+  color: rgb(0, 255, 157);
 }
 
 .greens {
@@ -64,6 +69,7 @@ button:hover {
 
 #checkBtn {
   background: rgb(31, 248, 31);
+  background: rgb(3, 194, 3);
 }
 
 #checkBtn:hover {
