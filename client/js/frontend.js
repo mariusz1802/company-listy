@@ -48,4 +48,11 @@ function triggerCopy() {
   storage.setSelectionRange(0, 99999);
   document.execCommand("copy");
   element.removeChild(storage);
+  const copied = document.querySelector("#copiedInfo");
+
+  copied.classList.add("show");
+
+  setTimeout(() => {
+    copied.classList.remove("show");
+  }, 2000);
 }

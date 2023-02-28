@@ -17,6 +17,10 @@ body {
   background: red;
 }
 
+h1 {
+  text-decoration: underline;
+}
+
 table,
 th,
 td {
@@ -103,4 +107,29 @@ button:hover {
 
 #selectBtn:active {
   transform: translateY(5px);
+}
+
+#copiedInfo {
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.9);
+  border-radius: 20px 20px 0 0;
+  position: fixed;
+  bottom: 0;
+  color: rgb(0, 0, 0);
+  right: 20px;
+  opacity: 0;
+}
+
+@keyframes showHide {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+.show {
+  animation-name: showHide;
+  animation-duration: 2s;
 }
