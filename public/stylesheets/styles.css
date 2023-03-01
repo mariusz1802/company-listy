@@ -77,15 +77,15 @@ button:hover {
 }
 
 #deleteBtn {
-  background: red;
+  background: rgb(246, 4, 4);
 }
 
 #deleteBtn:hover {
-  background: rgb(255, 83, 83);
+  background: rgb(255, 53, 53);
 }
 
-#uncheckBtn:hover {
-  background: whitesmoke;
+#unCheckBtn:hover {
+  background: white;
 }
 .buttonCell {
   text-align: center;

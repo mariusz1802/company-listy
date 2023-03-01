@@ -39,8 +39,26 @@ linie.forEach((linia) => {
   }
 });
 
+function saveAsJson(element) {
+  const jsonFirmy = JSON.stringify(element);
+
+  fs.writeFile("output.json", jsonFirmy, "utf8", function (err) {
+    if (err) {
+      console.log("An error occured while writing JOSN Object to File");
+      return console.log(err);
+    }
+    console.log("JSON File has been saved");
+  });
+}
+
+const JSONdata = fs.readFileSync("./output.json", "utf8");
+
+const parsed = JSON.parse(JSONdata);
+
+saveAsJson(firmy);
+
 app.get("/", (req, res) => {
-  res.render("index", { firmy: firmy });
+  res.render("index", { firmy: parsed });
 });
 
 app.use(express.static(path.join(__dirname, "public")));
