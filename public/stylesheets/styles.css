@@ -98,6 +98,7 @@ button:hover {
   padding: 20px;
   background: rgba(255, 255, 255, 0.2);
   max-width: 60%;
+  word-wrap: break-word;
 }
 
 .green {

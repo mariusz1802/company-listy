@@ -21,8 +21,12 @@ checkBtn.forEach((el) => {
     let tr = td.parentNode;
     const email = tr.childNodes[5].textContent;
     tr.classList.add("green");
-    mailArr.push(email);
-    mailList.innerHTML = mailArr;
+      if(mailArr.indexOf(email)==-1){
+        mailArr.push(email);
+        mailList.innerHTML = mailArr;
+      }else {
+        mailList.innerHTML = mailArr;
+      }
   });
 });
 
@@ -31,6 +35,9 @@ unCheckBtn.forEach((el) => {
     let td = e.target.parentNode;
     let tr = td.parentNode;
     tr.classList.remove("green");
+    const email = tr.childNodes[5].textContent;
+     mailArr =  mailArr.filter(el => el !== email);
+     mailList.innerHTML = mailArr;
   });
 });
 
