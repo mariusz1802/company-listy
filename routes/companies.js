@@ -1,13 +1,11 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const companies = require("../data/companies.json");
-const Companies = require('../models/comapny.model');
+// const companies = require("../data/companies.json");
+const Companies = require("../models/comapny.model");
 
-
-router.get('/', (req, res) => {
-    res.json(companies);
-})
-
+router.get("/", (req, res) => {
+  res.json(companies);
+});
 
 // router.delete('/api/companies/:id', async (req, res) => {
 //     try {
@@ -20,7 +18,5 @@ router.get('/', (req, res) => {
 //         res.status(500).send(error);
 //     }
 // })
-
-
 
 module.exports = router;
