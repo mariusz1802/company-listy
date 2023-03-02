@@ -7,11 +7,21 @@ const companyEmail = document.querySelectorAll(".companyEmail");
 
 let mailArr = [];
 
-deleteBtn.forEach((el) => {
+deleteBtn.forEach((el, index) => {
   el.addEventListener("click", (e) => {
     let td = e.target.parentNode;
     let tr = td.parentNode;
     tr.parentNode.removeChild(tr);
+    const id = index;
+    fetch(`/api/companies/:${id}`, {method : 'DELETE'}).then(response => {
+      if (!response.ok) {
+        throw new Error('Network repsonse was not ok');
+      }
+      location.reload();
+    })
+    .catch(error => {
+      console.error('Error', error)
+    })
   });
 });
 

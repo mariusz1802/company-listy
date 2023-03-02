@@ -3,14 +3,16 @@ const fs = require("fs");
 const app = express();
 let ejs = require("ejs");
 let path = require("path");
-let mongoose = require("mongoose");
-
-//mongoose
+const companyRouter = require('./routes/companies');
+const { v4: uuidv4 } = require('uuid');
 
 app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "client")));
 
+
+
+// app.use('/api/companies', companyRouter);
 //odczytaj dane z data.txt
 const dane = fs.readFileSync("./data.txt", "utf8");
 
@@ -30,6 +32,7 @@ linie.forEach((linia) => {
 
   if (dopasowanie) {
     const firma = {
+      id  : uuidv4(),
       name: dopasowanie[1],
       www: dopasowanie[2],
       email: dopasowanie[3],
@@ -42,7 +45,7 @@ linie.forEach((linia) => {
 function saveAsJson(element) {
   const jsonFirmy = JSON.stringify(element);
 
-  fs.writeFile("output.json", jsonFirmy, "utf8", function (err) {
+  fs.writeFile("./data/companies.json", jsonFirmy, "utf8", function (err) {
     if (err) {
       console.log("An error occured while writing JOSN Object to File");
       return console.log(err);
@@ -50,12 +53,20 @@ function saveAsJson(element) {
     console.log("JSON File has been saved");
   });
 }
+saveAsJson(firmy);
 
-const JSONdata = fs.readFileSync("./output.json", "utf8");
-
+const JSONdata = fs.readFileSync("./data/companies.json", "utf8");
 const parsed = JSON.parse(JSONdata);
 
-saveAsJson(firmy);
+
+const idToFind = 'b8abba2c-403b-44ee-a4e9-2524453368fa'
+
+
+const element = parsed.find(el => el.id === idToFind);
+
+console.log('Element name: ', element.name);
+console.log('Element www: ', element.www)
+
 
 app.get("/", (req, res) => {
   res.render("index", { firmy: parsed });
@@ -63,6 +74,6 @@ app.get("/", (req, res) => {
 
 app.use(express.static(path.join(__dirname, "public")));
 
-app.listen(3000, () => {
-  console.log("Serwer dziala na porcie 3000");
+app.listen(8000, () => {
+  console.log("Serwer dziala na porcie 8000");
 });
