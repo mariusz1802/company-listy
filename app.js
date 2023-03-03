@@ -6,9 +6,18 @@ let path = require("path");
 const companyRouter = require("./routes/companies");
 const { v4: uuidv4 } = require("uuid");
 
+const companies = require("./output.json");
+const { clearScreenDown } = require("readline");
+
 app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "client")));
+
+
+
+
+
+app.use("/", companyRouter);
 
 //odczytaj dane z data.txt
 const dane = fs.readFileSync("./data.txt", "utf8");
@@ -40,7 +49,26 @@ linie.forEach((linia) => {
 });
 console.log(firmy);
 
-const savedPATH = "./data/companies.json";
+
+
+
+app.post('/delete', (req,res) => {
+  const idToDelete = req.body.id;
+  console.log(req.body.id)
+    const filterData = companies.filrer(item => item.id !== idToDelete);
+
+  fs.writeFile('./output.json', JSON.stringify(filterData), err => {
+    if(err){
+    console.log(err);
+    return;
+    }
+    console.log("Dane zostały zaktualizowane")
+  })
+
+  res.redirect("/")
+})
+
+
 
 function saveAsJson(element) {
   const jsonFirmy = JSON.stringify(element);
@@ -61,7 +89,7 @@ const parsed = JSON.parse(JSONdata);
 saveAsJson(firmy);
 
 app.get("/", (req, res) => {
-  res.render("index", { firmy: firmy });
+  res.render("index", { firmy: parsed });
 });
 
 app.use(express.static(path.join(__dirname, "public")));

@@ -29,17 +29,21 @@
       </thead>
       <tbody>
         <% firmy.forEach(function(company){ %>
+          <form action="/delete" method="POST">
         <tr>
-          <td><%- company.name %></td>
+          <td><%- company.name %>
+          </td>
           <td>
             <%- `<a href="${company.www}" target="blank">${company.www}</a>` %>
           </td>
           <td class="companyEmail"><%- company.email %></td>
           <td class="buttonCell"><button id="checkBtn">Check</button></td>
           <td class="buttonCell"><button id="unCheckBtn">Uncheck</button></td>
-          <td class="buttonCell"><button id="deleteBtn">Delete</button></td>
-        </tr>
-        <%}); %>
+            <input type="hidden" name="id" value="<%= company.id %>">
+            <td class="buttonCell"><button type="submit" id="deleteBtn">Delete</button></td>    
+          </tr>
+        </form>
+          <%}); %>
       </tbody>
     </table>
 
