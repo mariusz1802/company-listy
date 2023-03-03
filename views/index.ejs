@@ -9,16 +9,18 @@
   </head>
   <body>
     <h1>Comapnies from Germany</h1>
-    <div class="mailList">choose mail which you want to send...
-
-
-      
-    </div>
+    <div class="mailList">choose mail which you want to send...</div>
     <button id="selectBtn">Copy Text</button>
 
+    <form method="POST" action="/delete">
+      <input type="hidden" name="id" id="id" value="0" />
+      <p>Wyslij te dane do delete</p>
+      <button type="submit">Wyslij</button>
+    </form>
     <table>
       <thead>
         <tr>
+          fo
           <th>Nazwa Firmy</th>
           <th>Adres strony internetowej</th>
           <th>Adres Email</th>
@@ -29,21 +31,19 @@
       </thead>
       <tbody>
         <% firmy.forEach(function(company){ %>
-          <form action="/delete" method="POST">
         <tr>
-          <td><%- company.name %>
-          </td>
+          <td><%- company.name %></td>
           <td>
             <%- `<a href="${company.www}" target="blank">${company.www}</a>` %>
           </td>
           <td class="companyEmail"><%- company.email %></td>
           <td class="buttonCell"><button id="checkBtn">Check</button></td>
           <td class="buttonCell"><button id="unCheckBtn">Uncheck</button></td>
-            <input type="hidden" name="id" value="<%= company.id %>">
-            <td class="buttonCell"><button type="submit" id="deleteBtn">Delete</button></td>    
-          </tr>
-        </form>
-          <%}); %>
+          <td>
+            <button id="deleteBtn">Delete</button>
+          </td>
+        </tr>
+        <%}); %>
       </tbody>
     </table>
 

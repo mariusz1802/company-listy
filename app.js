@@ -5,19 +5,19 @@ let ejs = require("ejs");
 let path = require("path");
 const companyRouter = require("./routes/companies");
 const { v4: uuidv4 } = require("uuid");
+var bodyParser = require("body-parser");
 
 const companies = require("./output.json");
 const { clearScreenDown } = require("readline");
+const { getElementsByTagType } = require("domutils");
 
 app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "client")));
 
-
-
-
-
 app.use("/", companyRouter);
+app.use(bodyParser.urlencoded());
+app.use(bodyParser.json());
 
 //odczytaj dane z data.txt
 const dane = fs.readFileSync("./data.txt", "utf8");
@@ -32,13 +32,13 @@ const wyrazenie =
 //Tablica na dane firm;
 const firmy = [];
 
-linie.forEach((linia) => {
+linie.forEach((linia, index) => {
   //Sprawdz dopasowanie do wyrazanie regularnego
   const dopasowanie = linia.match(wyrazenie);
 
   if (dopasowanie) {
     const firma = {
-      id: uuidv4(),
+      id: index,
       name: dopasowanie[1],
       www: dopasowanie[2],
       email: dopasowanie[3],
@@ -48,27 +48,6 @@ linie.forEach((linia) => {
   }
 });
 console.log(firmy);
-
-
-
-
-app.post('/delete', (req,res) => {
-  const idToDelete = req.body.id;
-  console.log(req.body.id)
-    const filterData = companies.filrer(item => item.id !== idToDelete);
-
-  fs.writeFile('./output.json', JSON.stringify(filterData), err => {
-    if(err){
-    console.log(err);
-    return;
-    }
-    console.log("Dane zostały zaktualizowane")
-  })
-
-  res.redirect("/")
-})
-
-
 
 function saveAsJson(element) {
   const jsonFirmy = JSON.stringify(element);
@@ -81,6 +60,20 @@ function saveAsJson(element) {
     console.log("JSON File has been saved");
   });
 }
+
+app.post("/delete", (req, res) => {
+  const idToDelete = req.body.id;
+  const findID = companies.findIndex((el) => el.id === idToDelete);
+
+  console.log(findID);
+
+  if (findID !== -1) {
+    companies.splice(findID, 1);
+    console.log("Obiekt zostął usunięty");
+  } else {
+    console.log("nie znaleziono obiektu o podanym ID.");
+  }
+});
 
 const JSONdata = fs.readFileSync("./output.json", "utf8");
 

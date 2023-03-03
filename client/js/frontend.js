@@ -12,19 +12,8 @@ deleteBtn.forEach((el) => {
     let td = e.target.parentNode;
     let tr = td.parentNode;
     tr.parentNode.removeChild(tr);
-
   });
 });
-
-const form = document.querySelector('form');
-
-
-form.addEventListener("submit", function(event){
-  event.stopPropagation();
-  event.preventDefault();
-})
-
-
 
 checkBtn.forEach((el) => {
   el.addEventListener("click", (e) => {
@@ -32,12 +21,12 @@ checkBtn.forEach((el) => {
     let tr = td.parentNode;
     const email = tr.childNodes[5].textContent;
     tr.classList.add("green");
-      if(mailArr.indexOf(email)==-1){
-        mailArr.push(email);
-        mailList.innerHTML = mailArr;
-      }else {
-        mailList.innerHTML = mailArr;
-      }
+    if (mailArr.indexOf(email) == -1) {
+      mailArr.push(email);
+      mailList.innerHTML = mailArr;
+    } else {
+      mailList.innerHTML = mailArr;
+    }
   });
 });
 
@@ -47,8 +36,8 @@ unCheckBtn.forEach((el) => {
     let tr = td.parentNode;
     tr.classList.remove("green");
     const email = tr.childNodes[5].textContent;
-     mailArr =  mailArr.filter(el => el !== email);
-     mailList.innerHTML = mailArr;
+    mailArr = mailArr.filter((el) => el !== email);
+    mailList.innerHTML = mailArr;
   });
 });
 
