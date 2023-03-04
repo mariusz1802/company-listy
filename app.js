@@ -47,7 +47,6 @@ linie.forEach((linia, index) => {
     firmy.push(firma);
   }
 });
-console.log(firmy);
 
 function saveAsJson(element) {
   const jsonFirmy = JSON.stringify(element);
@@ -63,16 +62,21 @@ function saveAsJson(element) {
 
 app.post("/delete", (req, res) => {
   const idToDelete = req.body.id;
-  const findID = companies.findIndex((el) => el.id === idToDelete);
+  console.log("ID to delete: ", idToDelete);
+  const parsedCompanies = JSON.parse(fs.readFileSync("output.json"));
 
+  const findID = parsedCompanies.findIndex((el) => el.id == idToDelete);
   console.log(findID);
 
   if (findID !== -1) {
-    companies.splice(findID, 1);
+    parsedCompanies.splice(findID, 1);
     console.log("Obiekt zostął usunięty");
+    saveAsJson(parsedCompanies);
   } else {
     console.log("nie znaleziono obiektu o podanym ID.");
   }
+
+  res.redirect("/");
 });
 
 const JSONdata = fs.readFileSync("./output.json", "utf8");

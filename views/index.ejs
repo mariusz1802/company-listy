@@ -12,15 +12,15 @@
     <div class="mailList">choose mail which you want to send...</div>
     <button id="selectBtn">Copy Text</button>
 
-    <form method="POST" action="/delete">
-      <input type="hidden" name="id" id="id" value="0" />
+    <!-- <form action="/delete" method="POST">
+      <input type="hidden" name="id" value="1" />
+
       <p>Wyslij te dane do delete</p>
       <button type="submit">Wyslij</button>
-    </form>
+    </form> -->
     <table>
       <thead>
         <tr>
-          fo
           <th>Nazwa Firmy</th>
           <th>Adres strony internetowej</th>
           <th>Adres Email</th>
@@ -31,18 +31,24 @@
       </thead>
       <tbody>
         <% firmy.forEach(function(company){ %>
+
         <tr>
           <td><%- company.name %></td>
           <td>
             <%- `<a href="${company.www}" target="blank">${company.www}</a>` %>
           </td>
           <td class="companyEmail"><%- company.email %></td>
-          <td class="buttonCell"><button id="checkBtn">Check</button></td>
-          <td class="buttonCell"><button id="unCheckBtn">Uncheck</button></td>
+          <td class="buttonCell">
+            <button type="button" id="checkBtn">Check</button>
+          </td>
+          <td class="buttonCell">
+            <button type="button" id="unCheckBtn">Uncheck</button>
+          </td>
           <td>
             <button id="deleteBtn">Delete</button>
           </td>
         </tr>
+
         <%}); %>
       </tbody>
     </table>
