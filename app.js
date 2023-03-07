@@ -3,19 +3,20 @@ const fs = require("fs");
 const app = express();
 let ejs = require("ejs");
 let path = require("path");
-const companyRouter = require("./routes/companies");
+// const companyRouter = require("./routes/companies");
 const { v4: uuidv4 } = require("uuid");
 var bodyParser = require("body-parser");
 
-const companies = require("./output.json");
+// const companies = require("./output.json");
 const { clearScreenDown } = require("readline");
 const { getElementsByTagType } = require("domutils");
+const e = require("express");
 
 app.set("view engine", "ejs");
 
 app.use(express.static(path.join(__dirname, "client")));
 
-app.use("/", companyRouter);
+// app.use("/", companyRouter);
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 
@@ -35,13 +36,13 @@ const firmy = [];
 linie.forEach((linia, index) => {
   //Sprawdz dopasowanie do wyrazanie regularnego
   const dopasowanie = linia.match(wyrazenie);
-
   if (dopasowanie) {
     const firma = {
       id: index,
       name: dopasowanie[1],
       www: dopasowanie[2],
       email: dopasowanie[3],
+      check: false,
     };
 
     firmy.push(firma);
@@ -60,33 +61,54 @@ function saveAsJson(element) {
   });
 }
 
-app.post("/delete", (req, res) => {
+saveAsJson(firmy);
+
+app.post("/check", (req, res) => {
   const idToDelete = req.body.id;
   console.log("ID to delete: ", idToDelete);
-  const parsedCompanies = JSON.parse(fs.readFileSync("output.json"));
-
-  const findID = parsedCompanies.findIndex((el) => el.id == idToDelete);
+  const findID = firmy.findIndex((el) => el.id == idToDelete);
   console.log(findID);
 
   if (findID !== -1) {
-    parsedCompanies.splice(findID, 1);
-    console.log("Obiekt zostął usunięty");
-    saveAsJson(parsedCompanies);
+    console.log("ZNalazlem cos");
+    const newArr = firmy.map((el) => {
+      if (el.id === findID) {
+        {
+          el.check = true;
+          return;
+        }
+      }
+    });
+    console.log(newArr);
+  } else {
+    console.log("niE ZNALAZLEM TEGO ID");
+  }
+  res.redirect("back");
+});
+
+app.post("/delete", (req, res) => {
+  const idToDelete = req.body.id;
+  console.log("ID to delete: ", idToDelete);
+  const findID = firmy.findIndex((el) => el.id == idToDelete);
+  console.log(findID);
+
+  if (findID !== -1) {
+    firmy.splice(findID, 1);
+    const jsonFimy = JSON.stringify(firmy);
+    fs.writeFile("output.json", jsonFimy, "utf8", function (err) {
+      if (err) {
+        console.log("An error has occured while writing JOSN Object to File");
+      }
+      console.log("New JSON file has been overwritten after delete");
+    });
+    res.redirect("back");
   } else {
     console.log("nie znaleziono obiektu o podanym ID.");
   }
-
-  res.redirect("/");
 });
 
-const JSONdata = fs.readFileSync("./output.json", "utf8");
-
-const parsed = JSON.parse(JSONdata);
-
-saveAsJson(firmy);
-
 app.get("/", (req, res) => {
-  res.render("index", { firmy: parsed });
+  res.render("index", { firmy: firmy });
 });
 
 app.use(express.static(path.join(__dirname, "public")));
