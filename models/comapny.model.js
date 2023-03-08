@@ -1,11 +1,10 @@
-const { data } = require("cheerio/lib/api/attributes");
 const mongoose = require("mongoose");
 const dataJSON = require("../output.json");
 const companySchema = new mongoose.Schema({
-  id: { type: Number, required: true },
-  name: { type: String, required: true },
-  www: { type: String, required: true },
-  email: { type: String, required: true },
+  id: { type: Number, required: false },
+  name: { type: String, required: false },
+  www: { type: String, required: false },
+  email: { type: String, required: false },
 });
 
 const Company = mongoose.model("Company", companySchema);
