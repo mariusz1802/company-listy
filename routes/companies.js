@@ -5,13 +5,8 @@ const Companies = require("../models/comapny.model");
 const app = express();
 
 router.get("/companies", (req, res) => {
+  const companies = new Companies();
   res.json(companies);
 });
-
-
-
-
-
-
 
 module.exports = router;

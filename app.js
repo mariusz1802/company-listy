@@ -6,6 +6,7 @@ let path = require("path");
 // const companyRouter = require("./routes/companies");
 const { v4: uuidv4 } = require("uuid");
 var bodyParser = require("body-parser");
+const Routes = require("./routes/routes");
 
 // const companies = require("./output.json");
 const { clearScreenDown } = require("readline");
@@ -18,7 +19,10 @@ app.use(express.static(path.join(__dirname, "client")));
 
 // app.use("/", companyRouter);
 app.use(bodyParser.urlencoded());
+
 app.use(bodyParser.json());
+
+app.use("/", Routes);
 
 //odczytaj dane z data.txt
 const dane = fs.readFileSync("./data.txt", "utf8");
