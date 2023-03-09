@@ -12,10 +12,15 @@
     <div class="mailList">choose mail which you want to send...</div>
     <button id="selectBtn">Copy Text</button>
 
-    <form action="/delete" method="POST">
+    <form style="border: 2px solid yellow" action="/delete" method="POST">
       <input type="hidden" name="id" value="0" />
       <p>Wyslij te dane do delete</p>
       <button type="submit">Wyslij</button>
+    </form>
+
+    <form style="border: 2px solid red" action="/upload" method="POST">
+      <p>ZAŁADUJ PLIK DO TABLICY</p>
+      <button type="submi">Load File...</button>
     </form>
 
     <table>
@@ -30,7 +35,7 @@
         </tr>
       </thead>
       <tbody>
-        <% firmy.forEach(function(company){ %>
+        <% if(firmy) {%> <% firmy.forEach(function(company){ %>
 
         <tr>
           <td><%- company.name %></td>
@@ -39,17 +44,22 @@
           </td>
           <td class="companyEmail"><%- company.email %></td>
           <td class="buttonCell">
-            <button type="button" id="checkBtn">Check</button>
+            <%- `<button type="button" id="${company.id}" class="checkBtn">
+              Check</button
+            >` %>
           </td>
           <td class="buttonCell">
-            <button type="button" id="unCheckBtn">Uncheck</button>
+            <%- `<button type="button" id="${company.id}" class="unCheckBtn">
+              Uncheck</button
+            >` %>
           </td>
           <td>
-            <button id="deleteBtn">Delete</button>
+            <%- `<button class="deleteBtn" id="${company.id}">Delete</button>`
+            %>
           </td>
         </tr>
 
-        <%}); %>
+        <%}); %> <%}%>
       </tbody>
     </table>
 

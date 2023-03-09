@@ -5,7 +5,7 @@ let ejs = require("ejs");
 let path = require("path");
 var bodyParser = require("body-parser");
 const Routes = require("./routes/routes");
-const { companyRoute } = require("./companyReader");
+const { loadTxt } = require("./companyReader");
 
 app.set("view engine", "ejs");
 
@@ -15,7 +15,6 @@ app.use(bodyParser.urlencoded());
 
 app.use(bodyParser.json());
 
-app.use("/", companyRoute);
 app.use("/", Routes);
 
 app.use(express.static(path.join(__dirname, "public")));

@@ -3,10 +3,24 @@ const app = express();
 const router = express.Router();
 const dataJSON = require("../output.json");
 const companyModel = require("../models/comapny.model");
-const { firmy } = require("../companyReader");
+const { saveAsJson, loadTxt } = require("../companyReader");
 const fs = require("fs");
+const multer = require("multer");
+
+const upload = multer({ dest: "uploads/" });
 
 const myJsonInstance = new companyModel(dataJSON);
+
+const firmy = loadTxt();
+console.log(firmy);
+
+router.get("/", (req, res) => {
+  res.render("index", { firmy: firmy });
+});
+
+router.post("/upload", upload.single("file"), (req, res) => {
+  res.send("plik został załadowany");
+});
 
 router.get("/companies", (req, res) => {
   myJsonInstance.save((err) => {

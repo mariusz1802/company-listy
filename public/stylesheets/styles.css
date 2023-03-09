@@ -67,24 +67,24 @@ button:hover {
   cursor: pointer;
 }
 
-#checkBtn {
+.checkBtn {
   background: rgb(31, 248, 31);
   background: rgb(3, 194, 3);
 }
 
-#checkBtn:hover {
+.checkBtn:hover {
   background: rgb(95, 255, 95);
 }
 
-#deleteBtn {
+.deleteBtn {
   background: rgb(246, 4, 4);
 }
 
-#deleteBtn:hover {
+.deleteBtn:hover {
   background: rgb(255, 53, 53);
 }
 
-#unCheckBtn:hover {
+.unCheckBtn:hover {
   background: white;
 }
 .buttonCell {
