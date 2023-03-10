@@ -5,7 +5,9 @@ let ejs = require("ejs");
 let path = require("path");
 var bodyParser = require("body-parser");
 const Routes = require("./routes/routes");
-const { loadTxt } = require("./companyReader");
+const fileUpload = require('express-fileupload');
+
+app.use(fileUpload());
 
 app.set("view engine", "ejs");
 

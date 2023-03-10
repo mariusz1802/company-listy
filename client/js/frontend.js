@@ -5,6 +5,9 @@ const unCheckBtn = document.querySelectorAll("#unCheckBtn");
 const mailList = document.querySelector(".mailList");
 const companyEmail = document.querySelectorAll(".companyEmail");
 
+
+
+
 let mailArr = [];
 
 deleteBtn.forEach((el) => {

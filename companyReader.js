@@ -4,13 +4,14 @@ const app = express();
 let path = require("path");
 var bodyParser = require("body-parser");
 
-function loadTxt() {
+function arrayOfObjects(dane) {
+  const mojeDane = dane;
   app.use(express.static(path.join(__dirname, "client")));
   app.use(bodyParser.urlencoded());
 
   app.use(bodyParser.json());
 
-  const dane = fs.readFileSync("./data.txt", "utf8");
+  // const dane = fs.readFileSync("./data.txt", "utf8");
   //Podziel dane na linie
   const linie = dane.split("\n");
 
@@ -50,4 +51,4 @@ function saveAsJson(element) {
   });
 }
 
-module.exports = { saveAsJson, loadTxt };
+module.exports = { saveAsJson, arrayOfObjects };
