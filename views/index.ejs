@@ -12,12 +12,6 @@
     <div class="mailList">choose mail which you want to send...</div>
     <button id="selectBtn">Copy Text</button>
 
-    <form style="border: 2px solid yellow" action="/delete" method="POST">
-      <input type="hidden" name="id" value="1" />
-      <p>Wyslij te dane do delete</p>
-      <button type="submit">Wyslij</button>
-    </form>
-
     <form action="/upload" method="post" enctype="multipart/form-data">
       <input type="file" name="fileToUpload" />
       <button type="submit">Załaduj plik</button>
@@ -54,8 +48,9 @@
             >` %>
           </td>
           <td>
-            <%- `<button class="deleteBtn" id="${company.id}">Delete</button>`
-            %>
+            <button class="delete-btn" data-id="<%= company.id %>">
+              Usuń element
+            </button>
           </td>
         </tr>
 
@@ -65,6 +60,8 @@
 
     <div id="copiedInfo">Text was copied to clipboard...</div>
 
+    <script src="/js/jquery.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script type="text/javascript" src="/js/frontend.js"></script>
   </body>
 </html>

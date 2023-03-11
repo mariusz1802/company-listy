@@ -13,16 +13,13 @@ const upload = multer({ dest: "uploads/" });
 
 const myJsonInstance = new companyModel(dataJSON);
 
-const JSONcompanies = fs.readFile("output.json", (err, data) => {
-  if (err) throw err;
-  let companies = JSON.parse(data);
-
-  router.get("/", (req, res) => {
+router.get("/", (req, res) => {
+  fs.readFile("output.json", (err, data) => {
+    if (err) throw err;
+    let companies = JSON.parse(data);
     res.render("index", { firmy: companies });
   });
 });
-
-console.log(JSONcompanies);
 
 router.post("/upload", (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -54,8 +51,8 @@ router.get("/companies", (req, res) => {
   });
 });
 
-router.post("/delete", (req, res) => {
-  const idToDelete = req.body.id;
+router.delete("/delete", (req, res) => {
+  const idToDelete = req.query.id;
   console.log("ID to delete: ", idToDelete);
   fs.readFile("output.json", (err, data) => {
     if (err) throw err;
@@ -67,10 +64,11 @@ router.post("/delete", (req, res) => {
       fs.writeFile("output.json", jsonFimy, "utf8", function (err) {
         if (err) {
           console.log("An error has occured while writing JOSN Object to File");
+          res.status(404);
         }
         console.log("New JSON file has been overwritten after delete");
+        res.status(200);
       });
-      res.redirect("back");
     } else {
       console.log("nie znaleziono obiektu o podanym ID.");
     }

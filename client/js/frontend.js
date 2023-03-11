@@ -1,23 +1,25 @@
-const deleteBtn = document.querySelectorAll("#deleteBtn");
-const checkBtn = document.querySelectorAll("#checkBtn");
-const unCheckBtn = document.querySelectorAll("#unCheckBtn");
+const deleteBtn = document.querySelectorAll(".deleteBtn");
+const checkBtn = document.querySelectorAll(".checkBtn");
+const unCheckBtn = document.querySelectorAll(".unCheckBtn");
 
 const mailList = document.querySelector(".mailList");
 const companyEmail = document.querySelectorAll(".companyEmail");
 
-
-
-
 let mailArr = [];
 
-deleteBtn.forEach((el) => {
-  el.addEventListener("click", (e) => {
-    let td = e.target.parentNode;
-    let tr = td.parentNode;
-    tr.parentNode.removeChild(tr);
-  });
+$(document).on("click", ".delete-btn", function () {
+  var elementId = $(this).data("id");
+  axios
+    .delete("/delete", { params: { id: elementId } })
+    .then(function (response) {
+      console.log("Wszystko ok");
+      // obsługa odpowiedzi serwera po usunięciu elementu
+      window.location.href = "/";
+    })
+    .catch(function (error) {
+      console.log(error);
+    });
 });
-
 checkBtn.forEach((el) => {
   el.addEventListener("click", (e) => {
     let td = e.target.parentNode;
