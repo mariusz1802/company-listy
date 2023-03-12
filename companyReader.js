@@ -5,39 +5,37 @@ let path = require("path");
 var bodyParser = require("body-parser");
 
 function arrayOfObjects(dane) {
-  const mojeDane = dane;
   app.use(express.static(path.join(__dirname, "client")));
   app.use(bodyParser.urlencoded());
 
   app.use(bodyParser.json());
 
-  // const dane = fs.readFileSync("./data.txt", "utf8");
-  //Podziel dane na linie
+  
   const linie = dane.split("\n");
 
   //Wyrażanie regularne do wyodrebnienia danych z linii
-  const wyrazenie =
+  const expression =
     /^(.*) - (https?:\/\/[\S]+) - E-mail: ([\w.-]+@[\w.-]+\.[\w.-]+)/;
 
   //Tablica na dane firm;
-  const firmy = [];
+  const companies = [];
 
   linie.forEach((linia, index) => {
-    //Sprawdz dopasowanie do wyrazanie regularnego
-    const dopasowanie = linia.match(wyrazenie);
-    if (dopasowanie) {
-      const firma = {
+    //Sprawdz RegExpMatch do wyrazanie regularnego
+    const RegExpMatch = linia.match(expression);
+    if (RegExpMatch) {
+      const company = {
         id: index,
-        name: dopasowanie[1],
-        www: dopasowanie[2],
-        email: dopasowanie[3],
+        name: RegExpMatch[1],
+        www: RegExpMatch[2],
+        email: RegExpMatch[3],
         check: false,
       };
 
-      firmy.push(firma);
+      companies.push(company);
     }
   });
-  return firmy;
+  return companies;
 }
 
 function saveAsJson(element) {

@@ -8,15 +8,21 @@
     <title>Agency List DB</title>
   </head>
   <body>
-    <h1>Comapnies from Germany</h1>
-    <div class="mailList">choose mail which you want to send...</div>
-    <button id="selectBtn">Copy Text</button>
-
-    <form action="/upload" method="post" enctype="multipart/form-data">
-      <input type="file" name="fileToUpload" />
-      <button type="submit">Załaduj plik</button>
+    <h1 style="color: red">MUTATOR</h1>
+  <img id="logo" src="mutator-logo.png" alt="mutator-logo">
+    <form class="fileForm" action="/upload" method="post" enctype="multipart/form-data">
+      <h4 style="color: white">Wybierz plik txt który ma zostać przetworzony...</h4>
+      <div>
+        <input type="file" name="fileToUpload" />
+        <button type="submit">Załaduj plik...</button>
+      </div>
     </form>
-
+    <div class="mailList">Check email which you want to send...</div>
+    <div class="buttonWrapper">
+      <button id="selectBtn">Copy Text</button>
+      <button id="sendedBtn">Sended</button>
+      <button id="clearBtn">Clear</button>
+    </div>
     <table>
       <thead>
         <tr>
@@ -48,8 +54,8 @@
             >` %>
           </td>
           <td>
-            <button class="delete-btn" data-id="<%= company.id %>">
-              Usuń element
+            <button class="deleteBtn" data-id="<%= company.id %>">
+              Delete
             </button>
           </td>
         </tr>

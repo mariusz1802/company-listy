@@ -9,6 +9,7 @@ body {
   align-content: center;
   align-items: center;
   color: rgb(42, 0, 55);
+  background: black;
 }
 
 body a {
@@ -22,9 +23,6 @@ body a {
   background: red;
 }
 
-h1 {
-  text-decoration: underline;
-}
 
 table,
 th,
@@ -109,13 +107,31 @@ button:hover {
 
 #selectBtn {
   background: linear-gradient(greenyellow, yellow);
-  margin: 20px;
+  margin: 20px 5px;
 }
 
 #selectBtn:active {
   transform: translateY(5px);
 }
 
+#sendedBtn {
+  background: linear-gradient(greenyellow, yellow);
+  margin: 20px 5px;
+
+
+}
+
+#clearBtn{
+  margin: 20px 5px;
+
+  background: linear-gradient(rgb(133, 133, 133), rgb(209, 209, 207));
+
+}
+
+
+#logo{
+  width:200px;
+}
 #copiedInfo {
   padding: 20px;
   background: rgba(255, 255, 255, 0.9);
@@ -139,4 +155,44 @@ button:hover {
 .show {
   animation-name: showHide;
   animation-duration: 2s;
+}
+
+.buttonWrapper {
+  display: flex;
+  
+}
+
+
+.fileForm {
+ display: flex;
+ justify-content: center;   
+ flex-direction: column;
+ align-content:  center;
+ align-items: center;
+ border : 2px solid rgb(250, 30, 30);
+ padding: 10px;
+ margin : 20px;
+ background: rgba(255, 42, 14, 0.4);
+ border-radius: 20px;
+}
+
+input[type="file"] {
+  padding: 10px;
+  color: white;
+  font-size: 1.2rem;
+
+}
+input[type="file"]:hover {
+cursor: pointer;
+}
+
+
+.fileForm button {
+  background: linear-gradient(red, rgb(129, 1, 1));
+  color : white;
+}
+
+.fileForm button:hover {
+
+
 }

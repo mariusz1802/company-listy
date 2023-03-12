@@ -7,7 +7,9 @@ const companyEmail = document.querySelectorAll(".companyEmail");
 
 let mailArr = [];
 
-$(document).on("click", ".delete-btn", function () {
+$(document).on("click", ".deleteBtn", function (e) {
+
+
   var elementId = $(this).data("id");
   axios
     .delete("/delete", { params: { id: elementId } })
@@ -15,10 +17,15 @@ $(document).on("click", ".delete-btn", function () {
       console.log("Wszystko ok");
       // obsługa odpowiedzi serwera po usunięciu elementu
       window.location.href = "/";
+
     })
     .catch(function (error) {
       console.log(error);
     });
+
+    let td = e.target.parentNode;
+    let tr = td.parentNode;
+    tr.parentNode.removeChild(tr);
 });
 checkBtn.forEach((el) => {
   el.addEventListener("click", (e) => {
