@@ -10,12 +10,11 @@ function arrayOfObjects(dane) {
 
   app.use(bodyParser.json());
 
-  
   const linie = dane.split("\n");
 
   //Wyrażanie regularne do wyodrebnienia danych z linii
   const expression =
-    /^(.*) - (https?:\/\/[\S]+) - E-mail: ([\w.-]+@[\w.-]+\.[\w.-]+)/;
+    /^(.*) - (https?:\/\/[\S]+) - E-mail: ([\w.-]+@[\w.-]+\.[\w.-]+)/i;
 
   //Tablica na dane firm;
   const companies = [];
