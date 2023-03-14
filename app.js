@@ -5,7 +5,7 @@ let ejs = require("ejs");
 let path = require("path");
 var bodyParser = require("body-parser");
 const Routes = require("./routes/routes");
-const fileUpload = require('express-fileupload');
+const fileUpload = require("express-fileupload");
 
 app.use(fileUpload());
 

@@ -14,7 +14,7 @@ function arrayOfObjects(dane) {
 
   //Wyrażanie regularne do wyodrebnienia danych z linii
   const expression =
-    /^(.*) - (https?:\/\/[\S]+) || ^(.*) - (https?:\/\/[\S]+) - E-mail: ([\w.-]+@[\w.-]+\.[\w.-]+)/i;
+    /^(.*) - (https?:\/\/[\S]+)(?: - (?:E-mail: )?([\w.-]+@[\w.-]+\.[\w.-]+))?/;
 
   //Tablica na dane firm;
   const companies = [];

@@ -1,8 +1,21 @@
 const fs = require("fs");
-const {arrayOfObjects, saveAsJson} = require("../companyReader");
+const { arrayOfObjects, saveAsJson } = require("../companyReader");
+const mongoose = require("mongoose");
 
+mongoose
+  .connect("mongodb://localhost/mydatatabase", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Połączono z bazą danych");
+    saveToDB;
+  })
+  .catch((error) => {
+    console.log("blad polaczenia z baza danych: ", error);
+  });
 
-
+const Company = require("../models/comapny.model.js");
 
 const passJSON = (req, res) => {
   fs.readFile("output.json", (err, data) => {
@@ -10,8 +23,32 @@ const passJSON = (req, res) => {
     let companies = JSON.parse(data);
     res.render("index", { firmy: companies });
   });
-}
+};
 
+const saveToDB = (req, res) => {
+  fs.readFile("output.json", (err, data) => {
+    if (err) throw err;
+    const newObj = new Company(data);
+
+    newObj.save(function (err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Obiekt zostal zapisany w bazie danych");
+        console.log(data);
+      }
+    });
+
+    Company.find({}, (err, data) => {
+      if (err) {
+        console.error(err);
+      } else {
+        console.log(data);
+      }
+    });
+  });
+  res.redirect("/");
+};
 
 const uploadTxt = (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -29,10 +66,9 @@ const uploadTxt = (req, res) => {
     const fileContent = fs.readFileSync(filePath, "utf8");
     const companiesTransformed = arrayOfObjects(fileContent);
     saveAsJson(companiesTransformed);
-    res.redirect("back")
+    res.redirect("back");
   });
-}
-
+};
 
 const deleteFromJSON = (req, res) => {
   const idToDelete = req.query.id;
@@ -56,10 +92,11 @@ const deleteFromJSON = (req, res) => {
       console.log("nie znaleziono obiektu o podanym ID.");
     }
   });
-}
+};
 
 module.exports = {
   uploadTxt,
   passJSON,
-  deleteFromJSON
+  deleteFromJSON,
+  saveToDB,
 };

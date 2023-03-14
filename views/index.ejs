@@ -8,6 +8,10 @@
     <title>Agency List DB</title>
   </head>
   <body>
+    <form method="post" action="/save">
+      <h1 style="color: white">ZAPISZ DO BAZY DANYCH</h1>
+      <button type="submit">Zapisz do bazy danych</button>
+    </form>
     <div class="logoWrapper">
       <img
         id="logo"
@@ -30,12 +34,17 @@
         method="post"
         enctype="multipart/form-data"
       >
-        <h4>Check file to mutate...</h4>
+        <h4>Check TXT file to mutate...</h4>
         <div>
           <input type="file" name="fileToUpload" />
           <button type="submit">Upload file</button>
         </div>
       </form>
+
+      <div class="middleContainer">
+        <button>Save to DB...</button>
+        <button>Edit from DB...</button>
+      </div>
       <div class="frame">
         <div class="mailList">Check email which you want to send...</div>
         <div class="buttonWrapper">
