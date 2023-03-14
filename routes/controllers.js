@@ -2,6 +2,8 @@ const fs = require("fs");
 const { arrayOfObjects, saveAsJson } = require("../companyReader");
 const mongoose = require("mongoose");
 
+const mydata = require("../output.json");
+
 mongoose
   .connect("mongodb://localhost/mydatatabase", {
     useNewUrlParser: true,
@@ -26,28 +28,18 @@ const passJSON = (req, res) => {
 };
 
 const saveToDB = (req, res) => {
-  fs.readFile("output.json", (err, data) => {
-    if (err) throw err;
-    const newObj = new Company(data);
+  const json = fs.readFileSync("output.json");
+  const data = JSON.parse(json);
 
-    newObj.save(function (err) {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Obiekt zostal zapisany w bazie danych");
-        console.log(data);
-      }
-    });
+  const collection = mongoose.connection.db.collection("mycollection");
 
-    Company.find({}, (err, data) => {
-      if (err) {
-        console.error(err);
-      } else {
-        console.log(data);
-      }
-    });
+  collection.insertMany(data, (err, result) => {
+    if (err) {
+      console.error("Błąd zapisu danych", err);
+    } else {
+      console.log("Dane zostały zapisane w bazie danych.");
+    }
   });
-  res.redirect("/");
 };
 
 const uploadTxt = (req, res) => {
