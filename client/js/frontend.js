@@ -2,35 +2,34 @@ const deleteBtn = document.querySelectorAll(".deleteBtn");
 const checkBtn = document.querySelectorAll(".checkBtn");
 const unCheckBtn = document.querySelectorAll(".unCheckBtn");
 
-const mailList = document.querySelector(".mailList");
+let mailList = document.querySelector(".mailList");
 const companyEmail = document.querySelectorAll(".companyEmail");
 
 let mailArr = [];
+let checkedArr = [];
 
 $(document).on("click", ".deleteBtn", function (e) {
-
-
-  var elementId = $(this).data("id");
+  var elementId = $(this).data("id");rapp
   axios
     .delete("/delete", { params: { id: elementId } })
     .then(function (response) {
       console.log("Wszystko ok");
       // obsługa odpowiedzi serwera po usunięciu elementu
       window.location.href = "/";
-
     })
     .catch(function (error) {
       console.log(error);
     });
 
-    let td = e.target.parentNode;
-    let tr = td.parentNode;
-    tr.parentNode.removeChild(tr);
+  let td = e.target.parentNode;
+  let tr = td.parentNode;
+  tr.parentNode.removeChild(tr);
 });
 checkBtn.forEach((el) => {
   el.addEventListener("click", (e) => {
     let td = e.target.parentNode;
     let tr = td.parentNode;
+    checkedArr.push(tr);
     const email = tr.childNodes[5].textContent;
     tr.classList.add("green");
     if (mailArr.indexOf(email) == -1) {
@@ -39,6 +38,27 @@ checkBtn.forEach((el) => {
     } else {
       mailList.innerHTML = mailArr;
     }
+  });
+});
+
+const sendedButton = document.querySelector("#sendedBtn");
+
+const clearButton = document.querySelector("#clearBtn");
+
+clearButton.addEventListener("click", () => {
+  mailArr = [];
+  mailList.innerText = "";
+  checkedArr.map((el) => {
+    el.classList.remove("green");
+  });
+});
+
+sendedButton.addEventListener("click", () => {
+  mailArr = [];
+  mailList.innerText = "";
+  checkedArr.map((el) => {
+    el.classList.remove("green");
+    el.classList.add("orange");
   });
 });
 

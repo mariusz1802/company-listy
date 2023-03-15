@@ -8,23 +8,19 @@
     <title>Agency List DB</title>
   </head>
   <body>
-    <form method="post" action="/save">
-      <h1 style="color: white">ZAPISZ DO BAZY DANYCH</h1>
-      <button type="submit">Zapisz do bazy danych</button>
-    </form>
     <div class="logoWrapper">
       <img
         id="logo"
         src="mutator-cold.png"
         alt="mutator-cold"
-        style="margin-right: -20px"
+        style="margin-right: -15px"
       />
       <h1 id="mutator">MUTATOR</h1>
       <img
         id="logo"
         src="mutator-hot.png"
         alt="mutator-hot"
-        style="margin-left: -20px"
+        style="margin-left: -15px"
       />
     </div>
     <div class="wrapper">
@@ -42,7 +38,10 @@
       </form>
 
       <div class="middleContainer">
-        <button>Save to DB...</button>
+        <h5>Save to DB or Edit from DB</h5>
+        <form method="post" action="/save">
+          <button type="submit">Save to DB...</button>
+        </form>
         <button>Edit from DB...</button>
       </div>
       <div class="frame">
