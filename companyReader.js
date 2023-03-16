@@ -28,7 +28,7 @@ function arrayOfObjects(dane) {
         name: RegExpMatch[1],
         www: RegExpMatch[2],
         email: RegExpMatch[3],
-        check: false,
+        send: false,
       };
 
       companies.push(company);

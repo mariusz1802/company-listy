@@ -145,7 +145,7 @@ button:hover {
   transform: translateY(5px);
 }
 
-#sendedBtn {
+#sentBtn {
   background: linear-gradient(rgba(255, 112, 2, 1), rgb(253, 136, 2));
   margin: 20px 5px;
   color: white;

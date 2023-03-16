@@ -9,7 +9,8 @@ let mailArr = [];
 let checkedArr = [];
 
 $(document).on("click", ".deleteBtn", function (e) {
-  var elementId = $(this).data("id");rapp
+  var elementId = $(this).data("id");
+  rapp;
   axios
     .delete("/delete", { params: { id: elementId } })
     .then(function (response) {
@@ -25,6 +26,11 @@ $(document).on("click", ".deleteBtn", function (e) {
   let tr = td.parentNode;
   tr.parentNode.removeChild(tr);
 });
+
+$(document).on("click", "#sentBtn", function (e) {
+  console.log(checkedArr);
+});
+
 checkBtn.forEach((el) => {
   el.addEventListener("click", (e) => {
     let td = e.target.parentNode;
@@ -41,7 +47,7 @@ checkBtn.forEach((el) => {
   });
 });
 
-const sendedButton = document.querySelector("#sendedBtn");
+const sentButton = document.querySelector("#sentBtn");
 
 const clearButton = document.querySelector("#clearBtn");
 
@@ -53,7 +59,7 @@ clearButton.addEventListener("click", () => {
   });
 });
 
-sendedButton.addEventListener("click", () => {
+sentButton.addEventListener("click", () => {
   mailArr = [];
   mailList.innerText = "";
   checkedArr.map((el) => {
