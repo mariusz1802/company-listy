@@ -3,6 +3,7 @@ const fs = require("fs");
 const app = express();
 let path = require("path");
 var bodyParser = require("body-parser");
+const { v4: uuidv4 } = require("uuid");
 
 function arrayOfObjects(dane) {
   app.use(express.static(path.join(__dirname, "client")));
@@ -24,11 +25,11 @@ function arrayOfObjects(dane) {
     const RegExpMatch = linia.match(expression);
     if (RegExpMatch) {
       const company = {
-        id: index,
+        id: uuidv4(),
         name: RegExpMatch[1],
         www: RegExpMatch[2],
         email: RegExpMatch[3],
-        send: false,
+        sent: false,
       };
 
       companies.push(company);

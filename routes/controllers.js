@@ -2,7 +2,7 @@ const fs = require("fs");
 const { arrayOfObjects, saveAsJson } = require("../companyReader");
 const mongoose = require("mongoose");
 
-const mydata = require("../output.json");
+const mydata = "output.json";
 
 mongoose
   .connect("mongodb://localhost/mydatatabase", {
@@ -62,6 +62,22 @@ const uploadTxt = (req, res) => {
   });
 };
 
+const updateSentData = (req, res) => {
+  const idArray = req.body.idArr;
+
+  const JSONData = JSON.parse(fs.readFileSync(mydata, "utf8"));
+
+  const updateData = JSONData.map((item) => {
+    if (idArray.includes(item.id)) {
+      return { ...item, sent: true };
+    }
+
+    return item;
+  });
+  fs.writeFileSync(mydata, JSON.stringify(updateData));
+  res.send("dane send zostały zaktualizwane");
+};
+
 const deleteFromJSON = (req, res) => {
   const idToDelete = req.query.id;
   console.log("ID to delete: ", idToDelete);
@@ -91,4 +107,5 @@ module.exports = {
   passJSON,
   deleteFromJSON,
   saveToDB,
+  updateSentData,
 };

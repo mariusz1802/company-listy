@@ -1,16 +1,18 @@
 const deleteBtn = document.querySelectorAll(".deleteBtn");
 const checkBtn = document.querySelectorAll(".checkBtn");
 const unCheckBtn = document.querySelectorAll(".unCheckBtn");
+const sentButton = document.querySelector("#sentBtn");
+const clearButton = document.querySelector("#clearBtn");
 
 let mailList = document.querySelector(".mailList");
 const companyEmail = document.querySelectorAll(".companyEmail");
 
 let mailArr = [];
 let checkedArr = [];
+let idArr = [];
 
 $(document).on("click", ".deleteBtn", function (e) {
   var elementId = $(this).data("id");
-  rapp;
   axios
     .delete("/delete", { params: { id: elementId } })
     .then(function (response) {
@@ -27,13 +29,24 @@ $(document).on("click", ".deleteBtn", function (e) {
   tr.parentNode.removeChild(tr);
 });
 
-$(document).on("click", "#sentBtn", function (e) {
-  console.log(checkedArr);
+sentButton.addEventListener("click", () => {
+  axios
+    .post("/updateData", { idArr })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
 });
 
 checkBtn.forEach((el) => {
   el.addEventListener("click", (e) => {
     let td = e.target.parentNode;
+    const id = el.id;
+    idArr.push(id);
+    console.log("Tablica elementow id: ", idArr);
+
     let tr = td.parentNode;
     checkedArr.push(tr);
     const email = tr.childNodes[5].textContent;
@@ -46,10 +59,6 @@ checkBtn.forEach((el) => {
     }
   });
 });
-
-const sentButton = document.querySelector("#sentBtn");
-
-const clearButton = document.querySelector("#clearBtn");
 
 clearButton.addEventListener("click", () => {
   mailArr = [];
@@ -72,6 +81,18 @@ unCheckBtn.forEach((el) => {
   el.addEventListener("click", (e) => {
     let td = e.target.parentNode;
     let tr = td.parentNode;
+    const IdToFind = el.id;
+    console.log("ID to find: ", IdToFind);
+    const outPut = idArr.findIndex((element) => element == IdToFind);
+    console.log(outPut);
+
+    if (outPut !== -1) {
+      idArr.splice(IdToFind, 1);
+      console.log("element z tablicy zostal usuniety");
+    } else {
+      console.log("Nie znaleziono takiego elemenu");
+    }
+
     tr.classList.remove("green");
     const email = tr.childNodes[5].textContent;
     mailArr = mailArr.filter((el) => el !== email);
