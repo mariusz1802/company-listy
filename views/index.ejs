@@ -73,7 +73,15 @@
           <td>
             <%- `<a href="${company.www}" target="blank">${company.www}</a>` %>
           </td>
-          <td class="companyEmail"><%- company.email %></td>
+          <%- company.email ? `
+          <td class="companyEmail">${company.email}</td>
+
+          ` : `
+          <td class="companyEmail">
+            <input id="addEmailInput" type="text" />
+            <button id="addEmailBtn">Add</button>
+          </td>
+          ` %>
           <td class="buttonCell">
             <%- `<button type="button" id="${company.id}" class="checkBtn">
               Check</button

@@ -71,6 +71,14 @@ input:checked {
   outline: 2px solid deeppink;
 }
 
+.companyEmail {
+  display: flex;
+}
+
+.companyEmail input {
+  outline: none;
+}
+
 button {
   padding: 10px;
   font-weight: 500;

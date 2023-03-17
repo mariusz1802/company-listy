@@ -3,9 +3,9 @@ const checkBtn = document.querySelectorAll(".checkBtn");
 const unCheckBtn = document.querySelectorAll(".unCheckBtn");
 const sentButton = document.querySelector("#sentBtn");
 const clearButton = document.querySelector("#clearBtn");
-
-let mailList = document.querySelector(".mailList");
 const companyEmail = document.querySelectorAll(".companyEmail");
+const addEmailBtn = document.querySelectorAll("#addEmailBtn");
+let mailList = document.querySelector(".mailList");
 
 let mailArr = [];
 let checkedArr = [];
@@ -122,3 +122,15 @@ function triggerCopy() {
     copied.classList.remove("show");
   }, 2000);
 }
+
+addEmailBtn.forEach((el) => {
+  el.addEventListener("click", (e) => {
+    const td = e.target.parentNode;
+    const inputValue = td.querySelector("#addEmailInput").value;
+    if (!inputValue) {
+      return;
+    }
+
+    td.textContent = inputValue;
+  });
+});
