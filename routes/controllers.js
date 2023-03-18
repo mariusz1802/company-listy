@@ -18,6 +18,7 @@ mongoose
   });
 
 const Company = require("../models/comapny.model.js");
+const { name } = require("body-parser");
 
 const passJSON = (req, res) => {
   fs.readFile("output.json", (err, data) => {
@@ -40,6 +41,35 @@ const saveToDB = (req, res) => {
       console.log("Dane zostały zapisane w bazie danych.");
     }
   });
+};
+
+const chooseData = (req, res) => {
+  const json = fs.readFileSync("output.json");
+  const data = JSON.parse(json);
+  const dbName = req.body.dbName;
+
+  const collection = mongoose.connection.db.collection(dbName);
+
+  collection.findOne(
+    {
+      name: "Adwokat Wojciech Kała",
+    },
+    function (err, mydata) {
+      if (err) {
+        console.log(err);
+      } else if (mydata) {
+        console.log("Dane juz istnieja w baazie danych");
+      } else {
+        collection.insertMany(data, (err, result) => {
+          if (err) {
+            console.error("Błąd zapisu danych", err);
+          } else {
+            console.log("Dane zostały zapisane w bazie danych.");
+          }
+        });
+      }
+    }
+  );
 };
 
 const uploadTxt = (req, res) => {
@@ -108,4 +138,5 @@ module.exports = {
   deleteFromJSON,
   saveToDB,
   updateSentData,
+  chooseData,
 };

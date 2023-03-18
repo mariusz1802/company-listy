@@ -79,6 +79,17 @@ input:checked {
   outline: none;
 }
 
+label[for="dbName"] {
+  color: white;
+  font-size: 1rem;
+}
+
+input[name="dbName"] {
+  font-size: 1rem;
+  padding: 2px;
+  width: 100%;
+}
+
 button {
   padding: 10px;
   font-weight: 500;
@@ -216,7 +227,7 @@ button:hover {
   background: rgba(255, 255, 255, 0.1);
   width: 100%;
   display: grid;
-  grid-template-columns: 40% 22% 1fr;
+  grid-template-columns: 30% 32% 1fr;
 }
 
 .middleContainer {

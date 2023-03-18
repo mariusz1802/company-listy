@@ -8,6 +8,7 @@ const {
   deleteFromJSON,
   saveToDB,
   updateSentData,
+  chooseData,
 } = require("./controllers");
 
 router.get("/", passJSON);
@@ -29,5 +30,7 @@ router.get("/file", async (req, res) => {
     res.status(500).send("Błąd serwera");
   }
 });
+
+router.post("/", chooseData);
 
 module.exports = router;

@@ -23,6 +23,13 @@
         style="margin-left: -15px"
       />
     </div>
+
+    <form action="/" method="POST">
+      <label for="dbName">Nazwa bazy danych:</label>
+      <input type="text" name="dbName" id="dbName" />
+
+      <button type="submit">Zapisz dane</button>
+    </form>
     <div class="wrapper">
       <form
         class="fileForm"
@@ -39,7 +46,8 @@
 
       <div class="middleContainer">
         <h5>Save to DB or Edit from DB</h5>
-        <form method="post" action="/save">
+        <form method="post" action="/">
+          <input type="text" name="dbName" id="dbName" placeholder="DB Name" />
           <button type="submit">Save to DB...</button>
         </form>
         <button>Edit from DB...</button>
