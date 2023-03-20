@@ -24,6 +24,8 @@
       />
     </div>
 
+    <a href="/kolekcja">Wyświetl kolekcję</a>
+
     <form action="/" method="POST">
       <label for="dbName">Nazwa bazy danych:</label>
       <input type="text" name="dbName" id="dbName" />
@@ -50,8 +52,9 @@
           <button type="submit">Save to DB...</button>
         </form>
         <form action="/loadDB" method="post">
-            <input type="text" name="dbNameLoad" id="dbNameLoad">
-          <button type="submit">Edit from DB...</button></form>
+          <input type="text" name="dbNameLoad" id="dbNameLoad" />
+          <button type="submit">Edit from DB...</button>
+        </form>
       </div>
       <div class="frame">
         <div class="mailList">Check email which you want to send...</div>

@@ -4,9 +4,21 @@ const mongoose = require("mongoose");
 
 const mydata = "output.json";
 
-
 const Company = require("../models/comapny.model.js");
 const { name } = require("body-parser");
+
+mongoose
+  .connect("mongodb://localhost/mydatatabase", {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Połączono z bazą danych");
+    saveToDB;
+  })
+  .catch((error) => {
+    console.log("blad polaczenia z baza danych: ", error);
+  });
 
 const passJSON = (req, res) => {
   fs.readFile("output.json", (err, data) => {
@@ -23,44 +35,29 @@ const saveToDB = (req, res) => {
 
   const collection = mongoose.connection.db.collection(dbName);
 
-  collection.findOne(
-    {
-      name: "Adwokat Wojciech Kała",
-    },
-    function (err, mydata) {
-      if (err) {
-        console.log(err);
-      } else if (mydata) {
-        console.log("Dane juz istnieja w baazie danych");
-      } else {
-        collection.insertMany(data, (err, result) => {
-          if (err) {
-            console.error("Błąd zapisu danych", err);
-          } else {
-            console.log("Dane zostały zapisane w bazie danych.");
-          }
-        });
-      }
+  collection.insertMany(data, (err, result) => {
+    if (err) {
+      console.error("Błąd zapisu danych", err);
+    } else {
+      console.log("Dane zostały zapisane w bazie danych.");
     }
-  );
+  });
 };
 
 const loadDB = async (req, res) => {
   const dbNameLoad = req.body.dbNameLoad;
-  mongoose
-  .connect(`mongodb://localhost/${dbNameLoad}`, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    res.send(`Załadowano bazę danych: ${dbNameLoad}`);
+  const collection = mongoose.connection.db.collection(dbNameLoad);
+  console.log(collection);
 
-  })
-  .catch((error) => {
-    console.log("blad polaczenia z baza danych: ", error);
+  collection.find({}).toArray((error, data) => {
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(data);
+      res.redirect("/", { firmy: data });
+    }
   });
-
-}
+};
 
 const uploadTxt = (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
