@@ -233,9 +233,12 @@ button:hover {
 .middleContainer {
   grid-column: 2/3;
   padding: 0 15px;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  display: flex;
+  justify-content: space-between;
+}
+
+.middleContainer form {
+width: 200px;
 }
 
 .middleContainer h5 {

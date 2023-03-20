@@ -8,7 +8,7 @@ const {
   deleteFromJSON,
   saveToDB,
   updateSentData,
-  chooseData,
+  loadDB,
 } = require("./controllers");
 
 router.get("/", passJSON);
@@ -17,20 +17,12 @@ router.post("/upload", uploadTxt);
 
 router.delete("/delete", deleteFromJSON);
 
-router.post("/save", saveToDB);
 
 router.post("/updateData", updateSentData);
 
-router.get("/file", async (req, res) => {
-  try {
-    const file = await Company.findById(req.params);
-    res.render("file", { file });
-  } catch (err) {
-    console.log(err);
-    res.status(500).send("Błąd serwera");
-  }
-});
 
-router.post("/", chooseData);
+router.post("/", saveToDB);
+
+router.post("/loadDB", loadDB)
 
 module.exports = router;

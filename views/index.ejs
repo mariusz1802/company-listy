@@ -45,12 +45,13 @@
       </form>
 
       <div class="middleContainer">
-        <h5>Save to DB or Edit from DB</h5>
         <form method="post" action="/">
           <input type="text" name="dbName" id="dbName" placeholder="DB Name" />
           <button type="submit">Save to DB...</button>
         </form>
-        <button>Edit from DB...</button>
+        <form action="/loadDB" method="post">
+            <input type="text" name="dbNameLoad" id="dbNameLoad">
+          <button type="submit">Edit from DB...</button></form>
       </div>
       <div class="frame">
         <div class="mailList">Check email which you want to send...</div>

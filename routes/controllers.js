@@ -4,18 +4,6 @@ const mongoose = require("mongoose");
 
 const mydata = "output.json";
 
-mongoose
-  .connect("mongodb://localhost/mydatatabase", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Połączono z bazą danych");
-    saveToDB;
-  })
-  .catch((error) => {
-    console.log("blad polaczenia z baza danych: ", error);
-  });
 
 const Company = require("../models/comapny.model.js");
 const { name } = require("body-parser");
@@ -29,21 +17,6 @@ const passJSON = (req, res) => {
 };
 
 const saveToDB = (req, res) => {
-  const json = fs.readFileSync("output.json");
-  const data = JSON.parse(json);
-
-  const collection = mongoose.connection.db.collection("mycollection");
-
-  collection.insertMany(data, (err, result) => {
-    if (err) {
-      console.error("Błąd zapisu danych", err);
-    } else {
-      console.log("Dane zostały zapisane w bazie danych.");
-    }
-  });
-};
-
-const chooseData = (req, res) => {
   const json = fs.readFileSync("output.json");
   const data = JSON.parse(json);
   const dbName = req.body.dbName;
@@ -71,6 +44,23 @@ const chooseData = (req, res) => {
     }
   );
 };
+
+const loadDB = async (req, res) => {
+  const dbNameLoad = req.body.dbNameLoad;
+  mongoose
+  .connect(`mongodb://localhost/${dbNameLoad}`, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    res.send(`Załadowano bazę danych: ${dbNameLoad}`);
+
+  })
+  .catch((error) => {
+    console.log("blad polaczenia z baza danych: ", error);
+  });
+
+}
 
 const uploadTxt = (req, res) => {
   if (!req.files || Object.keys(req.files).length === 0) {
@@ -136,7 +126,7 @@ module.exports = {
   uploadTxt,
   passJSON,
   deleteFromJSON,
-  saveToDB,
   updateSentData,
-  chooseData,
+  saveToDB,
+  loadDB,
 };
