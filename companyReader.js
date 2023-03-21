@@ -15,12 +15,12 @@ function arrayOfObjects(dane) {
 
   //Wyrażanie regularne do wyodrebnienia danych z linii
   const expression =
-    /^(.*) - (https?:\/\/[\S]+)(?: - (?:E-mail: )?([\w.-]+@[\w.-]+\.[\w.-]+))?/;
+    /^(.*) - (https?:\/\/[\S]+)(?: - (?:E-mail: )?([\w.-]+@[\w.-]+\.[\w.-]+))?/i;
 
   //Tablica na dane firm;
   const companies = [];
 
-  linie.forEach((linia, index) => {
+  linie.forEach((linia) => {
     //Sprawdz RegExpMatch do wyrazanie regularnego
     const RegExpMatch = linia.match(expression);
     if (RegExpMatch) {

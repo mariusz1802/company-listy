@@ -9,7 +9,7 @@ const {
   saveToDB,
   updateSentData,
   loadDB,
-  showCollection,
+  updateEmail,
 } = require("./controllers");
 
 router.get("/", passJSON);
@@ -20,9 +20,10 @@ router.delete("/delete", deleteFromJSON);
 
 router.post("/updateData", updateSentData);
 
-router.post("/", saveToDB);
+router.post("/updateEmail", updateEmail);
 
-router.post("/loadDB", loadDB);
+router.post("/save", saveToDB);
 
+router.post("/", loadDB);
 
 module.exports = router;

@@ -4,7 +4,7 @@ const unCheckBtn = document.querySelectorAll(".unCheckBtn");
 const sentButton = document.querySelector("#sentBtn");
 const clearButton = document.querySelector("#clearBtn");
 const companyEmail = document.querySelectorAll(".companyEmail");
-const addEmailBtn = document.querySelectorAll("#addEmailBtn");
+const addEmailBtn = document.querySelectorAll(".addEmailBtn");
 let mailList = document.querySelector(".mailList");
 
 let mailArr = [];
@@ -125,12 +125,21 @@ function triggerCopy() {
 
 addEmailBtn.forEach((el) => {
   el.addEventListener("click", (e) => {
+    const elId = el.id;
     const td = e.target.parentNode;
     const inputValue = td.querySelector("#addEmailInput").value;
+    axios
+      .post("/updateEmail", { elId, inputValue })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
     if (!inputValue) {
       return;
     }
-
     td.textContent = inputValue;
   });
 });

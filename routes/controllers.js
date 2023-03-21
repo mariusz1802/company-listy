@@ -40,6 +40,7 @@ const saveToDB = (req, res) => {
       console.error("Błąd zapisu danych", err);
     } else {
       console.log("Dane zostały zapisane w bazie danych.");
+      res.redirect("back");
     }
   });
 };
@@ -53,8 +54,8 @@ const loadDB = async (req, res) => {
     if (error) {
       console.log(error);
     } else {
-      console.log(data);
-      res.redirect("/", { firmy: data });
+      const myData = data;
+      res.render("index", { firmy: myData });
     }
   });
 };
@@ -79,9 +80,9 @@ const uploadTxt = (req, res) => {
   });
 };
 
+//TODO:updateSentData and updateEmail to refactorization cause of redundation
 const updateSentData = (req, res) => {
   const idArray = req.body.idArr;
-
   const JSONData = JSON.parse(fs.readFileSync(mydata, "utf8"));
 
   const updateData = JSONData.map((item) => {
@@ -93,6 +94,23 @@ const updateSentData = (req, res) => {
   });
   fs.writeFileSync(mydata, JSON.stringify(updateData));
   res.send("dane send zostały zaktualizwane");
+};
+
+const updateEmail = (req, res) => {
+  const idEl = req.body.elId;
+  const emailData = req.body.inputValue;
+  console.log(idEl);
+  console.log(emailData);
+  const JSONData = JSON.parse(fs.readFileSync(mydata, "utf8"));
+
+  const updateData = JSONData.map((item) => {
+    if (idEl.includes(item.id)) {
+      return { ...item, email: emailData };
+    }
+    return item;
+  });
+  fs.writeFileSync(mydata, JSON.stringify(updateData));
+  res.send("dane email zostały zakutalizowane");
 };
 
 const deleteFromJSON = (req, res) => {
@@ -126,4 +144,5 @@ module.exports = {
   updateSentData,
   saveToDB,
   loadDB,
+  updateEmail,
 };
