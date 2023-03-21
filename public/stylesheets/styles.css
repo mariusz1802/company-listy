@@ -13,9 +13,26 @@ body {
   background: linear-gradient(to right, black, rgb(73, 0, 0));
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 @font-face {
   font-family: Mutator;
   src: url("StormGust.ttf");
+}
+
+#toTop {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  background-color: yellowgreen;
+  font-size: 2rem;
+  color: yellow;
+  border: 3px solid yellow;
 }
 
 .logoWrapper {
@@ -48,6 +65,7 @@ table,
 th,
 td {
   border: 1px solid rgb(49, 49, 49);
+
   padding: 7px;
 }
 
@@ -56,7 +74,7 @@ table {
 }
 
 td {
-  /* background: rgb(220, 220, 220); */
+  background: rgba(255, 255, 255, 0.1);
 }
 
 th {
@@ -73,6 +91,10 @@ input:checked {
 
 .companyEmail {
   display: flex;
+  outline: none;
+  justify-content: left;
+  padding: 20px;
+  border: none;
 }
 
 .companyEmail input {
@@ -82,12 +104,6 @@ input:checked {
 label[for="dbName"] {
   color: white;
   font-size: 1rem;
-}
-
-input[name="dbName"] {
-  font-size: 1rem;
-  padding: 2px;
-  width: 100%;
 }
 
 button {
@@ -232,13 +248,23 @@ button:hover {
 
 .middleContainer {
   grid-column: 2/3;
-  padding: 0 15px;
   display: flex;
-  justify-content: space-between;
+  /* border: 3px solid gold; */
+  justify-content: space-around;
 }
 
 .middleContainer form {
-width: 200px;
+  width: 180px;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+  width: 40%;
+}
+
+.middleContainer input {
+  font-size: 1rem;
+  padding: 3px;
 }
 
 .middleContainer h5 {
@@ -249,6 +275,8 @@ width: 200px;
 
 .middleContainer button {
   height: 70px;
+  width: 100%;
+  margin: 20px 0;
 }
 
 .middleContainer form {
@@ -280,10 +308,14 @@ width: 200px;
   /* border-radius: 20px; */
 }
 
+.fileWrapper {
+  display: flex;
+}
+
 input[type="file"] {
   padding: 10px;
-  color: white;
-  font-size: 1.2rem;
+  color: rgb(0, 238, 255);
+  font-size: 1rem;
 }
 input[type="file"]:hover {
   cursor: pointer;
@@ -292,6 +324,7 @@ input[type="file"]:hover {
 .fileForm button {
   background: linear-gradient(rgba(10, 18, 255, 0.4), rgba(29, 123, 255, 0.4));
   color: white;
+  font-size: 1.1rem;
   border: 1px solid rgb(11, 156, 253);
 }
 

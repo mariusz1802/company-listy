@@ -143,3 +143,25 @@ addEmailBtn.forEach((el) => {
     td.textContent = inputValue;
   });
 });
+
+const InputEmail = document.querySelectorAll("#addEmailInput");
+
+const toTopBtn = document.querySelector("#toTop");
+
+window.addEventListener("scroll", () => {
+  if (window.pageYOffset > 200) {
+    toTopBtn.style.display = "block";
+  } else {
+    toTopBtn.style.display = "none";
+  }
+});
+
+InputEmail.forEach((el) => {
+  el.addEventListener("keydown", (e) => {
+    const td = e.target.parentNode;
+    const inputValue = td.querySelector("#addEmailInput").value;
+    if (e.key === "Enter") {
+      td.textContent = inputValue;
+    }
+  });
+});

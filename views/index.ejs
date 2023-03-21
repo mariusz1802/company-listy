@@ -8,7 +8,7 @@
     <title>Agency List DB</title>
   </head>
   <body>
-    <div class="logoWrapper">
+    <div id="top" class="logoWrapper">
       <img
         id="logo"
         src="mutator-cold.png"
@@ -32,7 +32,7 @@
         enctype="multipart/form-data"
       >
         <h4>Check TXT file to mutate...</h4>
-        <div>
+        <div class="fileWrapper">
           <input type="file" name="fileToUpload" />
           <button type="submit">Upload file</button>
         </div>
@@ -40,11 +40,23 @@
 
       <div class="middleContainer">
         <form method="post" action="/save">
-          <input type="text" name="dbName" id="dbName" placeholder="DB Name" />
+          <input
+            class="select"
+            type="text"
+            name="dbName"
+            id="dbName"
+            placeholder="Write DB Name to save..."
+          />
           <button type="submit">Save to DB...</button>
         </form>
         <form action="/" method="post">
-          <input type="text" name="dbNameLoad" id="dbNameLoad" />
+          <input
+            class="select"
+            type="text"
+            name="dbNameLoad"
+            id="dbNameLoad"
+            placeholder="Write DB Name to select..."
+          />
           <button type="submit">Show selected DB...</button>
         </form>
       </div>
@@ -57,6 +69,7 @@
         </div>
       </div>
     </div>
+
     <table>
       <thead>
         <tr>
@@ -108,6 +121,7 @@
     </table>
 
     <div id="copiedInfo">Text was copied to clipboard...</div>
+    <a href="#top"><button id="toTop">&#8593</button></a>
 
     <script src="/js/jquery.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
