@@ -1,7 +1,5 @@
 const express = require("express");
-const fs = require("fs");
 const app = express();
-let ejs = require("ejs");
 let path = require("path");
 var bodyParser = require("body-parser");
 const Routes = require("./routes/routes");
@@ -10,8 +8,6 @@ const fileUpload = require("express-fileupload");
 app.use(fileUpload());
 
 app.set("view engine", "ejs");
-
-app.use(express.static(path.join(__dirname, "client")));
 
 app.use(bodyParser.urlencoded());
 

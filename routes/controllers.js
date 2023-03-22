@@ -1,11 +1,7 @@
 const fs = require("fs");
 const { arrayOfObjects, saveAsJson } = require("../companyReader");
 const mongoose = require("mongoose");
-
 const mydata = "output.json";
-
-const Company = require("../models/comapny.model.js");
-const { name } = require("body-parser");
 
 mongoose
   .connect("mongodb://localhost/mydatatabase", {
@@ -35,7 +31,7 @@ const saveToDB = (req, res) => {
 
   const collection = mongoose.connection.db.collection(dbName);
 
-  collection.insertMany(data, (err, result) => {
+  collection.insertMany(data, (err) => {
     if (err) {
       console.error("Błąd zapisu danych", err);
     } else {
