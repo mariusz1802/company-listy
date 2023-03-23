@@ -147,3 +147,10 @@ export const showUpBtnOnScroll = () => {
     toTopBtn.style.display = "none";
   }
 };
+
+export const editEmail = (el) => {
+  el.addEventListener("click", () => {
+    const elId = el.id;
+    console.log("edit clicked: ", elId);
+  });
+};
