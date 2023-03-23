@@ -1,83 +1,11 @@
-const checkBtn = document.querySelectorAll(".checkBtn");
-const unCheckBtn = document.querySelectorAll(".unCheckBtn");
-const sentButton = document.querySelector("#sentBtn");
-const clearButton = document.querySelector("#clearBtn");
-const addEmailBtn = document.querySelectorAll(".addEmailBtn");
-const deleteBtn = document.querySelectorAll(".deleteBtn");
+const toTopBtn = document.querySelector("#toTop");
 let mailList = document.querySelector(".mailList");
 
 let mailArr = [];
-let checkedArr = [];
 let idArr = [];
+let checkedArr = [];
 
-deleteBtn.forEach((el) => {
-  el.addEventListener("click", (e) => {
-    console.log("clicked");
-    let elementId = el.querySelector("[data-id]");
-    axios
-      .delete("/delete", { params: { id: elementId } })
-      .then(function () {
-        console.log("Wszystko ok");
-        // obsługa odpowiedzi serwera po usunięciu elementu
-        window.location.href = "/";
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-
-    let td = e.target.parentNode;
-    let tr = td.parentNode;
-    tr.parentNode.removeChild(tr);
-  });
-});
-
-sentButton.addEventListener("click", () => {
-  axios
-    .post("/updateData", { idArr })
-    .then((response) => {
-      console.log(response.data);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-});
-
-checkBtn.forEach((el) => {
-  el.addEventListener("click", (e) => {
-    let td = e.target.parentNode;
-    const id = el.id;
-    idArr.push(id);
-    let tr = td.parentNode;
-    checkedArr.push(tr);
-    const email = tr.childNodes[5].textContent;
-    tr.classList.add("green");
-    if (mailArr.indexOf(email) == -1) {
-      mailArr.push(email);
-      mailList.innerHTML = mailArr;
-    } else {
-      mailList.innerHTML = mailArr;
-    }
-  });
-});
-
-clearButton.addEventListener("click", () => {
-  mailArr = [];
-  mailList.innerText = "";
-  checkedArr.map((el) => {
-    el.classList.remove("green");
-  });
-});
-
-sentButton.addEventListener("click", () => {
-  mailArr = [];
-  mailList.innerText = "";
-  checkedArr.map((el) => {
-    el.classList.remove("green");
-    el.classList.add("orange");
-  });
-});
-
-unCheckBtn.forEach((el) => {
+export const unCheckField = (el) => {
   el.addEventListener("click", (e) => {
     let td = e.target.parentNode;
     let tr = td.parentNode;
@@ -98,13 +26,71 @@ unCheckBtn.forEach((el) => {
     mailArr = mailArr.filter((el) => el !== email);
     mailList.innerHTML = mailArr;
   });
-});
+};
 
-const selectAndCopyBtn = document.querySelector("#selectBtn");
+export const deleteFieldFn = (el) => {
+  el.addEventListener("click", (e) => {
+    console.log("clicked");
+    let elementId = el.querySelector("[data-id]");
+    axios
+      .delete("/delete", { params: { id: elementId } })
+      .then(function () {
+        window.location.href = "/";
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+    let td = e.target.parentNode;
+    let tr = td.parentNode;
+    tr.parentNode.removeChild(tr);
+  });
+};
 
-selectAndCopyBtn.addEventListener("click", triggerCopy);
+export const checkElementFn = (el) => {
+  el.addEventListener("click", (e) => {
+    let td = e.target.parentNode;
+    const id = el.id;
+    idArr.push(id);
+    let tr = td.parentNode;
+    checkedArr.push(tr);
+    const email = tr.childNodes[5].textContent;
+    tr.classList.add("green");
+    if (mailArr.indexOf(email) == -1) {
+      mailArr.push(email);
+      mailList.innerHTML = mailArr;
+    } else {
+      mailList.innerHTML = mailArr;
+    }
+  });
+};
 
-function triggerCopy() {
+export const sentData = () => {
+  axios
+    .post("/updateData", { idArr })
+    .then((response) => {
+      console.log(response.data);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+
+  mailArr = [];
+  mailList.innerText = "";
+  checkedArr.map((el) => {
+    el.classList.remove("green");
+    el.classList.add("orange");
+  });
+};
+
+export const clearFrame = () => {
+  mailArr = [];
+  mailList.innerText = "";
+  checkedArr.map((el) => {
+    el.classList.remove("green");
+  });
+};
+
+export const triggerCopy = () => {
   const storage = document.createElement("textarea");
   const element = document.querySelector(".mailList");
   storage.value = element.innerHTML;
@@ -121,9 +107,9 @@ function triggerCopy() {
   setTimeout(() => {
     copied.classList.remove("show");
   }, 2000);
-}
+};
 
-addEmailBtn.forEach((el) => {
+export const addEmail = (el) => {
   el.addEventListener("click", (e) => {
     const elId = el.id;
     const td = e.target.parentNode;
@@ -142,21 +128,9 @@ addEmailBtn.forEach((el) => {
     }
     td.textContent = inputValue;
   });
-});
+};
 
-const InputEmail = document.querySelectorAll("#addEmailInput");
-
-const toTopBtn = document.querySelector("#toTop");
-
-window.addEventListener("scroll", () => {
-  if (window.pageYOffset > 200) {
-    toTopBtn.style.display = "block";
-  } else {
-    toTopBtn.style.display = "none";
-  }
-});
-
-InputEmail.forEach((el) => {
+export const addEmailAfterEnter = (el) => {
   el.addEventListener("keydown", (e) => {
     const td = e.target.parentNode;
     const inputValue = td.querySelector("#addEmailInput").value;
@@ -164,4 +138,12 @@ InputEmail.forEach((el) => {
       td.textContent = inputValue;
     }
   });
-});
+};
+
+export const showUpBtnOnScroll = () => {
+  if (window.pageYOffset > 200) {
+    toTopBtn.style.display = "block";
+  } else {
+    toTopBtn.style.display = "none";
+  }
+};
