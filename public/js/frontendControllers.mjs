@@ -53,7 +53,8 @@ export const checkElementFn = (el) => {
     idArr.push(id);
     let tr = td.parentNode;
     checkedArr.push(tr);
-    const email = tr.childNodes[5].textContent;
+    const email = tr.childNodes[5].firstChild.textContent;
+    console.log(email);
     tr.classList.add("green");
     if (mailArr.indexOf(email) == -1) {
       mailArr.push(email);
@@ -112,8 +113,10 @@ export const triggerCopy = () => {
 export const addEmail = (el) => {
   el.addEventListener("click", (e) => {
     const elId = el.id;
+    console.log(elId);
     const td = e.target.parentNode;
     const inputValue = td.querySelector("#addEmailInput").value;
+
     axios
       .post("/updateEmail", { elId, inputValue })
       .then((response) => {
@@ -127,15 +130,27 @@ export const addEmail = (el) => {
       return;
     }
     td.textContent = inputValue;
+    createEditBtn(td, elId);
   });
+};
+
+const createEditBtn = (parent, id) => {
+  const editBtn = document.createElement("button");
+  editBtn.classList.add("editBtn");
+  editBtn.setAttribute("id", id);
+  editBtn.innerText = "Edit";
+  parent.appendChild(editBtn);
+  editBtn.addEventListener("click", editEmail(editBtn));
 };
 
 export const addEmailAfterEnter = (el) => {
   el.addEventListener("keydown", (e) => {
     const td = e.target.parentNode;
+    const elId = el.id;
     const inputValue = td.querySelector("#addEmailInput").value;
     if (e.key === "Enter") {
       td.textContent = inputValue;
+      createEditBtn(td, elId);
     }
   });
 };
@@ -149,8 +164,35 @@ export const showUpBtnOnScroll = () => {
 };
 
 export const editEmail = (el) => {
-  el.addEventListener("click", () => {
-    const elId = el.id;
-    console.log("edit clicked: ", elId);
+  el.addEventListener("click", (e) => {
+    const Id = el.id;
+    const parentNode = e.target.parentNode;
+    while (parentNode.firstChild) {
+      parentNode.removeChild(parentNode.firstChild);
+    }
+    createInputEmail(parentNode, Id);
   });
 };
+
+function createInputEmail(parentNode, Id) {
+  const td = document.createElement("td");
+  td.style.border = "none";
+  td.style.padding = 0;
+  td.style.margin = 0;
+  td.style.border = "none";
+
+  const input = document.createElement("input");
+  input.setAttribute("id", "addEmailInput");
+  input.style.outline = "none";
+  input.style.border = "none";
+  const button = document.createElement("button");
+  button.setAttribute("id", Id);
+  button.classList.add("addEmailBtn");
+  button.innerText = "Add";
+  td.appendChild(input);
+  td.appendChild(button);
+  td.classList.add("companyEmail");
+  parentNode.appendChild(td);
+  addEmail(button);
+  addEmailAfterEnter(parentNode);
+}

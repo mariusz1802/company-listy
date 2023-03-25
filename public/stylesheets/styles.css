@@ -91,11 +91,16 @@ input:checked {
 .companyEmail {
   display: flex;
   outline: none;
-  justify-content: left;
-  padding: 20px;
+  justify-content: space-between;
   border: none;
   align-items: center;
   align-content: center;
+  width: 90%;
+}
+
+.companyEmail button {
+  background: rgb(0, 157, 255);
+  color: white;
 }
 
 .companyEmail input {

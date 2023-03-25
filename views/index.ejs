@@ -76,7 +76,6 @@
           <th>Nazwa Firmy</th>
           <th>Adres strony internetowej</th>
           <th>Adres Email</th>
-          <th>Edit</th>
           <th>Add</th>
           <th>Delete</th>
           <th>Uncheck</th>
@@ -91,16 +90,15 @@
           <td>
             <%- `<a href="${company.www}" target="blank">${company.www}</a>` %>
           </td>
-          <%- company.email ? `
-          <td class="companyEmail">${company.email}
-        </td>
-        <td>      <button class="editBtn" id="${company.id}">Edit</button></td>
+          <%- company.email ? 
+          `<td class="companyEmail">${company.email}
+           <button class="editBtn" id="${company.id}">Edit</button>
+           </td>
 
           ` : `
           <td class="companyEmail">
-            <input id="addEmailInput" type="text" />
-
-            <button class="addEmailBtn" id="${company.id}">Add</button>
+          <input id="addEmailInput" type="text" />
+          <button class="addEmailBtn" id="${company.id}">Add</button>
           </td>
           ` %>
           <td class="buttonCell">
