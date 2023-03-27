@@ -39,6 +39,13 @@
       </form>
 
       <div class="middleContainer">
+
+        <select name="collections" id="">
+            <% collections.forEach(function(collection) { %>
+            <option value="<%= collection %>"><%=collection %></option>
+              <%}) %>
+        </select>
+
         <form method="post" action="/save">
           <input
             class="select"

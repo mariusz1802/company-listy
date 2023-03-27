@@ -1,26 +1,33 @@
 const fs = require("fs");
 const { arrayOfObjects, saveAsJson } = require("../companyReader");
 const mongoose = require("mongoose");
+const { CLIENT_RENEG_LIMIT } = require("tls");
 const mydata = "output.json";
-
-mongoose
-  .connect("mongodb://localhost/mydatatabase", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
-  .then(() => {
-    console.log("Połączono z bazą danych");
-    saveToDB;
-  })
-  .catch((error) => {
-    console.log("blad polaczenia z baza danych: ", error);
-  });
 
 const passJSON = (req, res) => {
   fs.readFile("output.json", (err, data) => {
     if (err) throw err;
-    let companies = JSON.parse(data);
-    res.render("index", { firmy: companies });
+    var companies = JSON.parse(data);
+
+    mongoose
+      .connect("mongodb://localhost/mydatatabase", {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      })
+      .then(() => {
+        console.log("Połączono z bazą danych");
+        return mongoose.connection.db.listCollections().toArray();
+      })
+      .then((collections) => {
+        const collectionNames = collections.map((collection) => {
+          return collection.name;
+        });
+        console.log(collectionNames);
+        res.render("index", { firmy: companies, collections: collectionNames });
+      })
+      .catch((error) => {
+        console.log("blad polaczenia z baza danych: ", error);
+      });
   });
 };
 
