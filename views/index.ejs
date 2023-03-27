@@ -83,7 +83,7 @@
       </thead>
       <tbody>
         <% if(firmy) {%> <% firmy.forEach(function(company){ %>
-
+          
         <tr <%-company.sent ? `class="orange" ` : `class="none" ` %>
           >
           <td><%- company.name %></td>

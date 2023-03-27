@@ -20,6 +20,7 @@ import {
   showUpBtnOnScroll,
   editEmail,
 } from "./frontendControllers.mjs";
+
 editBtn.forEach(editEmail);
 checkBtn.forEach(checkElementFn);
 unCheckBtn.forEach(unCheckField);

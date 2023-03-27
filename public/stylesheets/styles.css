@@ -165,6 +165,10 @@ button:hover {
   word-wrap: break-word;
 }
 
+#copyEmailsBtn {
+  background: red;
+}
+
 .green {
   background-color: rgba(0, 252, 8, 0.6);
   color: white;
@@ -200,6 +204,12 @@ button:hover {
   margin: 20px 5px;
   color: rgb(56, 56, 56);
   background: linear-gradient(rgb(133, 133, 133), rgb(209, 209, 207));
+}
+
+#copyEmailsBtn {
+  margin: 20px 5px;
+  background: linear-gradient(rgb(0, 8, 159), rgb(31, 71, 250));
+  color: white;
 }
 
 .frame {
@@ -331,4 +341,11 @@ input[type="file"]:hover {
   color: white;
   font-size: 1.1rem;
   border: 1px solid rgb(11, 156, 253);
+}
+
+#addEmailInput {
+  height: 25px;
+  border-radius: 3px;
+  width: 60%;
+  font-size: 1.3rem;
 }

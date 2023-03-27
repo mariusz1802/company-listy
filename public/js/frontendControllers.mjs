@@ -113,7 +113,6 @@ export const triggerCopy = () => {
 export const addEmail = (el) => {
   el.addEventListener("click", (e) => {
     const elId = el.id;
-    console.log(elId);
     const td = e.target.parentNode;
     const inputValue = td.querySelector("#addEmailInput").value;
 
@@ -175,12 +174,6 @@ export const editEmail = (el) => {
 };
 
 function createInputEmail(parentNode, Id) {
-  const td = document.createElement("td");
-  td.style.border = "none";
-  td.style.padding = 0;
-  td.style.margin = 0;
-  td.style.border = "none";
-
   const input = document.createElement("input");
   input.setAttribute("id", "addEmailInput");
   input.style.outline = "none";
@@ -189,10 +182,8 @@ function createInputEmail(parentNode, Id) {
   button.setAttribute("id", Id);
   button.classList.add("addEmailBtn");
   button.innerText = "Add";
-  td.appendChild(input);
-  td.appendChild(button);
-  td.classList.add("companyEmail");
-  parentNode.appendChild(td);
+  parentNode.appendChild(input);
+  parentNode.appendChild(button);
   addEmail(button);
   addEmailAfterEnter(parentNode);
 }
